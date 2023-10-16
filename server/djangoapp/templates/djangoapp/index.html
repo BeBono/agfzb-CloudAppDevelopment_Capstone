@@ -17,12 +17,18 @@
 
     <!--Add a nav bar here -->
     <nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
+     <div class="container-fluid">
         <div class="navbar-header">
-              <a class="navbar-brand" href="#">Home page</a>
+              <!-- <a class="navbar-brand" href="#"> Best Cars - Dealerships </a> -->
+              <h1>Best Cars - Dealerships</h1>
         </div>
-    </div>
-</nav>
+        
+        <!-- <a class="btn btn-link" href="{% url 'djangoapp:about' %}">About US</a> -->
+        <button class="btn btn-primary" onclick="window.location.href = '{% url 'djangoapp:about' %}'">About US</button>
+
+
+     </div>
+    </nav>
 
     <!--Add a dealer table here -->
 
