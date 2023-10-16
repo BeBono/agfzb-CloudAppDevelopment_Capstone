@@ -14,7 +14,12 @@ import json
 logger = logging.getLogger(__name__)
 
 
-# Create your views here.
+# Create your views test here.
+
+# def myview(request):
+#     context = {}
+#     if request.method == "GET":
+#         return render(request, 'my_template.html', context)
 
 
 # Create an `about` view to render a static about page
