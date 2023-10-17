@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dealership Review</title>
+    <title>Contact Us</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -14,33 +14,27 @@
 </head>
 
     <body>
-
-    <!--Add a nav bar here -->
     <nav class="navbar navbar-light bg-light">
-     <div class="container-fluid">
+    <div class="container-fluid">
         <div class="navbar-header">
-              <!-- <a class="navbar-brand" href="#"> Best Cars - Dealerships </a> -->
-              <h1>Best Cars - Dealerships</h1>
+            <a class="btn btn-link" href="{% url 'djangoapp:index' %}">Home</a>
         </div>
-        
-        <!-- <a class="btn btn-link" href="{% url 'djangoapp:about' %}">About Us</a> -->
-        <button class="btn btn-primary" onclick="window.location.href = '{% url 'djangoapp:about' %}'">About US</button>
-
-
-     </div>
-    </nav>
-
-    <!--Add a dealer table here -->
-
-
-    <div>
-        
-        <a class="btn btn-link" href="{% url 'djangoapp:contact' %}">Contact Us</a> 
-        <footer>
-            &#169; This web-based dealerships belongs to BeBono
-        </footer>
-        
+        <div class="text-center" style="width: 90%; padding-right: 100px" >
+        <h1>Contact Us</h1>
+        </div>
     </div>
+</nav>
+
+    <div style="padding:20px" > 
+        <h2 class= "bg-light">
+            Telephone Support: +75 018000-44553 / +75 018000-44588.
+        </h2>
+        <h2 class= "bg-light">
+            Support e-mail: dealershipbc@support.com
+            <br>Location: Oregon - U.S.</br>
+        </h2>
+    </div>
+
     </body>
 
 </html>
