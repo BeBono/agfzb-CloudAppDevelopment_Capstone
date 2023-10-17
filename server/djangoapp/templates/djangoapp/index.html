@@ -15,7 +15,7 @@
 
     <body>
 
-    <!--Add a nav bar here -->
+    <!--First nav bar main-->
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
             <div class="navbar-header">
@@ -32,6 +32,8 @@
 
     </nav>
 
+    <!--Second nav bar Dealership Review-->
+
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
            <div class="navbar-header">
@@ -41,7 +43,7 @@
                 
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <form class="form-inline" action="#" method="post">
+                        <form class="form-inline" action="{% url 'djangoapp:login' %}" method="get">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Username" name="username" >
                                 <input type="password" class="form-control" placeholder="Password" name="psw" >
