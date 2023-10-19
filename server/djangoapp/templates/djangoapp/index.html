@@ -32,7 +32,7 @@
 
     </nav>
 
-    <!--Second nav bar Dealership Review-->
+    <!--Second nav bar Dealership Review / Authentication-->
 
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
@@ -41,9 +41,14 @@
                 <h2>Dealership Review</h2>
            </div>
                 
-                <ul class="nav navbar-nav navbar-right">
+           {% if user.is_authenticated %}
+            <h1>Hola</h1>
+           
+           {% else %}
+
+                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <form class="form-inline" action="{% url 'djangoapp:login' %}" method="get">
+                        <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Username" name="username" >
                                 <input type="password" class="form-control" placeholder="Password" name="psw" >
@@ -53,6 +58,13 @@
                         </form>
                     </li>
                 </ul>
+
+           {% endif %}
+
+
+
+
+
     
          </div>
   
