@@ -94,7 +94,8 @@ def registration_request(request):
                                             password=password)
             # Login the user and redirect to course list page
             login(request, user)
-            return redirect("djangoapp/index.html")
+            #return redirect("djangoapp/index.html")
+            return render(request, 'djangoapp/index.html')
         else:
             return render(request, 'djangoapp/registration.html', context)
 
