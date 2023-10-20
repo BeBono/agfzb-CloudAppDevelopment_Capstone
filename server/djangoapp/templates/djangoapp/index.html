@@ -24,7 +24,7 @@
             </div>
 
             
-        <!-- <a class="btn btn-link" href="{% url 'djangoapp:about' %}">About Us</a> -->
+        <!-- <a class="btn btn-link" href="{% url 'djangoapp:about' %}">About Us</a> (2da option)-->
         <button class="btn btn-primary" onclick="window.location.href = '{% url 'djangoapp:about' %}'">About US</button>
         </div>
 
@@ -32,7 +32,7 @@
 
     </nav>
 
-    <!--Second nav bar Dealership Review / Authentication-->
+    <!--Second nav bar Dealership Review + Authentication-->
 
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
@@ -43,10 +43,11 @@
               
            
            {% if user.is_authenticated %}
-           <div class="nav navbar-nav navbar-right">
+           <div class="">
             
-                        <a href="#">({{user.username}})</a>
-                       <a href="#">Logout</a>
+                        <a style="margin-right:20px" href="">({{user.username}})</a>
+                        <a href="{% url 'djangoapp:logout' %}"> Logout</a>
+                    
                             
            </div>
            
