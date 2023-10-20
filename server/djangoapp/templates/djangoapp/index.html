@@ -32,7 +32,7 @@
 
     </nav>
 
-    <!--Second nav bar Dealership Review + Authentication-->
+    <!--Second nav bar Dealership Review + Sign in + Sign Up-->
 
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
@@ -51,7 +51,10 @@
                             
            </div>
            
+          
            {% else %}
+
+            <!--Sign Up-->
 
                  <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -61,7 +64,7 @@
                                 <input type="text" class="form-control" placeholder="Username" name="username" >
                                 <input type="password" class="form-control" placeholder="Password" name="psw" >
                                 <button class="btn btn-primary" type="submit">Login</button>   
-                                <a class="btn btn-link" href="#">Sign Up</a>
+                                <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
                             </div>
                         </form>
                     </li>
