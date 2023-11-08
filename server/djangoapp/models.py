@@ -24,10 +24,16 @@ class CarMake(models.Model):
 # <HINT> Create a Car Model model `class CarModel(models.Model):`:
 
 class CarModel(models.Model):
-# - Many-To-One relationship to Car Make model (One Car Make has many Car Models, using ForeignKey field)
-# Note: En Python, la sangría es fundamental, ya que define los bloques de código. En tu modelo CarModel, parece que estás intentando definir las opciones de TYPE_CHOICES con sangría incorrecta. Debe estar al mismo nivel de sangría que el resto del código en la clase.
+# - Many-To-Many relationship to CarMake model/class (One CarMake has many Car Models).
+# clarification:
+# "Many-to-Many" entre CarMake y CarModel cumple con el requerimiento "One Car Make has many Car Models". 
+# Cada instancia de CarMake puede estar asociada a múltiples instancias de CarModel, lo que significa que una marca de automóvil puede
+# tener muchos modelos de automóviles. Esto satisface el requerimiento de que una marca de automóvil tenga varios modelos de automóviles.
+
+        makes = models.ManyToManyField(CarMake)
+#   Note: En Python, la sangría es fundamental, ya que define los bloques de código. En tu modelo CarModel, parece que estás intentando definir las opciones de TYPE_CHOICES con sangría incorrecta. Debe estar al mismo nivel de sangría que el resto del código en la clase.
     
-# - Name  
+# - Name / Speciific car name  
         Name = models.CharField(blank=False, max_length=100)
 
 # - Dealer id, used to refer a dealer created in cloudant database
@@ -56,23 +62,23 @@ class CarModel(models.Model):
         ]
 
     # types Char field with defined enumeration choices
-        types = models.CharField(
+        type = models.CharField(
             null=False,
             max_length=20,
             choices=TYPE_CHOICES,
             default=SEDAN
         )
 
-    # - Year (DateField) 
-        Year = models.DateField(null=True)
+# - Year (DateField) 
+        year = models.DateField(null=True)
    
 
-    # Create a toString method for object string representation
-    # def __str__(self):
-        # return "Name: " + self.first_name + ", " + \
-        #        "Dealer_id: " + self.last_name + ", " + \
-        #        "Car types: " + self.types + ", " + \
-        #        "Total Learners: " + str(self.total_learners)
+# Create a toString method for object string representation
+        def __str__(self):
+            return "Name: " + self.Name + ", " + \
+                   "Dealer_id: " + self.Dealer_id + ", " + \
+                   "Car_type: " + self.type + ", " + \
+                   "Year: " + self.year
 
 
  
