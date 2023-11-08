@@ -4,7 +4,7 @@ from django.utils.timezone import now
 
 # Create your models here.
 
-# <HINT> Create a Car Make model `class CarMake(models.Model)`:
+# 1. <HINT> Create a Car Make model `class CarMake(models.Model)`:
 # - Name
 # - Description
 # - Any other fields you would like to include in car make model
@@ -21,25 +21,29 @@ class CarMake(models.Model):
 
 
 
-# <HINT> Create a Car Model model `class CarModel(models.Model):`:
+# 2. <HINT> Create a Car Model model `class CarModel(models.Model):`:
 
 class CarModel(models.Model):
 # - Many-To-Many relationship to CarMake model/class (One CarMake has many Car Models).
 # clarification:
 # "Many-to-Many" entre CarMake y CarModel cumple con el requerimiento "One Car Make has many Car Models". 
 # Cada instancia de CarMake puede estar asociada a múltiples instancias de CarModel, lo que significa que una marca de automóvil puede
-# tener muchos modelos de automóviles. Esto satisface el requerimiento de que una marca de automóvil tenga varios modelos de automóviles.
-
+# tener muchos modelos de automóviles. Esto satisface el requerimiento de que una marca de automóvil tenga varios modelos de automóviles:
         makes = models.ManyToManyField(CarMake)
-#   Note: En Python, la sangría es fundamental, ya que define los bloques de código. En tu modelo CarModel, parece que estás intentando definir las opciones de TYPE_CHOICES con sangría incorrecta. Debe estar al mismo nivel de sangría que el resto del código en la clase.
+
+# NOTA: Si se desea obtener una lista de modelos de automóviles asociados a una marca de vehículo específica, se podría de la siguiente manera:
+#         car_make = CarMake.objects.get(id=1)  # Reemplazar 1 con el ID de la marca de vehículo que se desea consultar.
+#         car_models = car_make.models.all()
+
+# Note: En Python, la sangría es fundamental, ya que define los bloques de código. En tu modelo CarModel, parece que estás intentando definir las opciones de TYPE_CHOICES con sangría incorrecta. Debe estar al mismo nivel de sangría que el resto del código en la clase.
     
-# - Name / Speciific car name  
+# - Name / Speciific car name # ASK CLARIFICATION ABOUT WHAT DOES MEAN THIS "name".  
         Name = models.CharField(blank=False, max_length=100)
 
-# - Dealer id, used to refer a dealer created in cloudant database
+# - Dealer_id, used to refer a dealer created in cloudant database
         Dealer_id = models.CharField(blank=False, max_length=50) 
 
-# - Type (CharField with a choices argument to provide limited choices such as Sedan, SUV, WAGON, etc.)
+# - Car_type (CharField with a choices argument to provide limited choices such as Sedan, SUV, WAGON, etc.)
    
     # Create the variables with the options:
         SEDAN = 'sedan'
@@ -82,8 +86,6 @@ class CarModel(models.Model):
 
 
  
-
-
 
 # <HINT> Create a plain Python class `CarDealer` to hold dealer data
 
