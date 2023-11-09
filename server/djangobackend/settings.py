@@ -77,12 +77,31 @@ WSGI_APPLICATION = 'djangobackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'MTI3NTItYWxiZXJ0',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
+
+# _psycopg2
+
+# INSTALL_APP = {
+#     'Crud',
+# }
+
+# SECRET_KEY = 'SECRET KEY for this Django Project'
 
 
 # Password validation
@@ -125,3 +144,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 MEDIA_URL = '/media/'
+
+# Configura el tipo de campo automático predeterminado
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
