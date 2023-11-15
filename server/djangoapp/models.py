@@ -30,7 +30,11 @@ class CarModel(models.Model):
 # "Many-to-Many" entre CarMake y CarModel cumple con el requerimiento "One Car Make has many Car Models". 
 # Cada instancia de CarMake puede estar asociada a múltiples instancias de CarModel, lo que significa que una marca de automóvil puede
 # tener muchos modelos de automóviles. Esto satisface el requerimiento de que una marca de automóvil tenga varios modelos de automóviles:
-        makes = models.ManyToManyField(CarMake)
+        # makes = models.ManyToManyField(CarMake)
+
+# Durante la creación de marcas, que incluyen modelos por defecto, fue necesario cambiar la relación 
+# a Many-to-one utilizando el método 'ForeignKey'
+        Makes = models.ForeignKey(CarMake, null=True, on_delete=models.CASCADE)
 
 # NOTA: Si se desea obtener una lista de modelos de automóviles asociados a una marca de vehículo específica, se podría de la siguiente manera:
 #         car_make = CarMake.objects.get(id=1)  # Reemplazar 1 con el ID de la marca de vehículo que se desea consultar.
@@ -83,7 +87,7 @@ class CarModel(models.Model):
             return "Name: " + self.Name + ", " + \
                    "Dealer_id: " + self.Dealer_id + ", " + \
                    "Car_type: " + self.type + ", " + \
-                   "Year: " + self.year
+                   "Year: " + self.year.strftime("%Y")
 
 
  
