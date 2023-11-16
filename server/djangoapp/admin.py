@@ -20,7 +20,7 @@ class CarModel_Inline(admin.StackedInline):
 # admin.ModelAdmin es una clase para customizar el modelo. En este caso, el modelo contiene 4 fields
 # pero estamos seleccionando 3.
 class CarModel_Admin(admin.ModelAdmin):
-    fields = ['Name','Dealer_id','type']
+    fields = ['Name','Dealer_id','type','year']
 
 
 # CarMakeAdmin class with CarModelInline:
@@ -41,7 +41,8 @@ admin.site.register(CarMake, CarMake_Admin)
 
 # Notas adicoinales:
 
-# * Debido a que no se debería crear un modelo solo con el modelo/tabla CarModel, el cual no contiene campo de Marca como requisito. CarModel independientemente no quedó funcionando.
+# * No se debería crear un modelo solo con el modelo/tabla CarModel (Sin definir la marca), pero igual funciona para cargar modelos de carros en la base de datos.
+
 # * Cabe anotar que los datos ingresados se verán reflejados en la base de datos, en este caso la de PostgreSQL
 
 # * Cualquier modificación en model.py, por ejemplo, en los campos, deberá ser migrada(reflejada) en la base de datos, 

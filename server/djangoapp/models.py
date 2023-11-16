@@ -13,7 +13,7 @@ from django.utils.timezone import now
 class CarMake(models.Model):
     Name = models.CharField(blank=False, max_length=50)
     Description = models.CharField(blank=False, max_length=50)  
-    myCampo = models.CharField(blank=True, max_length=60)
+    # myCampo = models.CharField(blank=True, max_length=60)
     
     # Create a toString method for object string representation
     def __str__(self):
