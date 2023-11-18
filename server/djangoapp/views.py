@@ -11,6 +11,7 @@ import logging
 import json
 
 from .resapis import get_dealers_from_cf
+from .resapis import get_dealer_reviews_from_cf
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -127,7 +128,18 @@ def get_dealerships(request):
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 # def get_dealer_details(request, dealer_id):
-# ...
+
+# def get_dealer_details(request, dealer_id):
+def get_dealer_details(request):
+    if request.method == "GET":
+        url = "http://127.0.0.1:5500/cloudant/data/reviews-full.json"
+        # Get dealers from the URL
+        reviews_ = get_dealer_reviews_from_cf(url)
+        # Concat all dealer's short name
+        dealer_reviews = ' '.join([review.review for review in reviews_])
+        # Return a list of dealer short name
+        return HttpResponse(dealer_reviews)
+
 
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):

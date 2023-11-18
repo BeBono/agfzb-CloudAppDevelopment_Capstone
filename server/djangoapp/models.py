@@ -92,8 +92,11 @@ class CarModel(models.Model):
 
  
 
-# <HINT> Create a plain Python class `CarDealer` to hold dealer data.
+# <HINT> Create a plain Python class `CarDealer` and 'DealerReview' to hold dealer data.
 # Note that this is a plain Python class instead of a subclass of Django model.
+# Parece que la intención es tener una clase simple para almacenar temporalmente datos 
+# extraídos de la base de datos (from Cloudant) y mostrarlos en la interfaz de usuario, 
+# sin necesidad de persistir esos datos en la base de datos mediante migraciones de Django.
 
 
 class CarDealer:
@@ -123,3 +126,31 @@ class CarDealer:
 
 
 # <HINT> Create a plain Python class `DealerReview` to hold review data
+
+class DealerReview:
+
+    # def __init__(self, id, name, dealership, review, purchase, purchase_date, car_make, car_model, car_year, sentiment):
+    def __init__(self, id, name, dealership, review, purchase, purchase_date, car_make, car_model, car_year):
+        # Dealer address
+        self.id = id
+        # Dealer city
+        self.name = name
+        # Dealer Full Name
+        self.dealership = dealership
+        # Dealer id
+        self.review = review
+        # Location lat
+        self.purchase = purchase
+        # Location long
+        self.purchase_date = purchase_date
+        # Dealer short name
+        self.car_make = car_make
+        # Dealer state
+        self.car_model = car_model
+        # Dealer zip
+        self.car_year = car_year
+        # Sentiment from NLU by IBM Cloud service
+        # self.sentiment = sentiment
+
+    def __str__(self):
+        return "Dealer review: " + self.review
