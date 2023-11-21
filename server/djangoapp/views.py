@@ -17,13 +17,6 @@ from .resapis import get_dealer_reviews_from_cf
 logger = logging.getLogger(__name__)
 
 
-# Create your views test here.
-
-# def myview(request):
-#     context = {}
-#     if request.method == "GET":
-#         return render(request, 'my_template.html', context)
-
 
 # Create an `about` view to render a static about page
 def about(request):
@@ -105,13 +98,6 @@ def registration_request(request):
 
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
-# Inicial version
-# def get_dealerships(request):
-#     context = {}
-#     if request.method == "GET":
-#         return render(request, 'djangoapp/index.html', context)
-
-# Update from lab / it shows the 'shot_name' of every dealer:
 
 def get_dealerships(request):
     if request.method == "GET":
@@ -122,23 +108,18 @@ def get_dealerships(request):
         dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
         # Return a list of dealer short name
         return HttpResponse(dealer_names)
-
-
+    
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
-# def get_dealer_details(request, dealer_id):
-
-# def get_dealer_details(request, dealer_id):
-def get_dealer_details(request):
+# Según las pruebas, 'request' corresponde a 'url' y 'id' al parámetro id en urls.py (path(route='dealer/<int:id>').
+def get_dealer_details(request, id):
     if request.method == "GET":
         url = "http://127.0.0.1:5500/cloudant/data/reviews-full.json"
-        # Get dealers from the URL
-        reviews_ = get_dealer_reviews_from_cf(url)
-        # Concat all dealer's short name
-        dealer_reviews = ' '.join([review.review for review in reviews_])
-        # Return a list of dealer short name
-        return HttpResponse(dealer_reviews)
+        
+        # Get reviews by URL + id ('get_dealer_reviews_from_cf' process from resapis.py and return the result filtered)
+        reviewsByid = get_dealer_reviews_from_cf(url, id)
+        return HttpResponse(reviewsByid)
 
 
 # Create a `add_review` view to submit a review

@@ -4,7 +4,7 @@ from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
 
 
-# (1/2) Method request es necesario para realizar la solitud del sub-siguiente bloque de código:
+# (1/2) Method request es necesario para realizar la solitud de los sub-siguientes bloques de código:
 
 def get_request(url, **kwargs):
     print(kwargs)
@@ -12,14 +12,15 @@ def get_request(url, **kwargs):
     try:
         # Call get method of requests library with URL and parameters
         response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                    params=kwargs)
-    except:
+                                params=kwargs)
+        status_code = response.status_code
+        print("With status {} ".format(status_code))
+        json_data = json.loads(response.text)
+        return json_data
+    except Exception as e:
         # If any error occurs
-        print("Network exception occurred")
-    status_code = response.status_code
-    print("With status {} ".format(status_code))
-    json_data = json.loads(response.text)
-    return json_data
+        print("Exception occurred: {}".format(e))
+        return None
 
 
 
@@ -37,7 +38,6 @@ def get_request(url, **kwargs):
 
 # Request HTTP Dealer (2/2):
        
-
 def get_dealers_from_cf(url, **kwargs):
     # arreglo que contendrá el resultado final
     results = []
@@ -68,23 +68,42 @@ def get_dealers_from_cf(url, **kwargs):
     return results
 
 
+
+
 # Request HTTP Review (2/2):
-def get_dealer_reviews_from_cf(url, **kwargs):
+# Este request obtiene el objeto JSON provisto por la URL en views.py 'def get_dealer_details'.  
+# Este request también obtiene el segundo atributo llamado 'id' proveniente de views.py 'def get_dealer_details'
+# El resultado de este request (filtro) es llamado por view.py dentro de 'def get_dealer_details' para ser presentado. En este caso,
+# un filtro del atributo/propiedad 'review' del objeto/reviews de acuerdo al 'id' que concuerde con el id de la url (eje: http://127.0.0.1:8000/djangoapp/dealer/10).
+
+def get_dealer_reviews_from_cf(url, id):
     # arreglo que contendrá el resultado final
     results = []
     # Call get_request with a URL parameter
-    json_result = get_request(url)
+    json_result = get_request(url, id=id)
+
+    # # Verificar si json_result tiene la clave "reviews"
+    if "reviews" in json_result:
+        # Filtrar las revisiones por el id proporcionado
+        Result = [review["review"] for review in json_result["reviews"] if review["id"] == id]
+        
+        # Muestra el resultado sin comas ni corchetes:
+        results.append(Result[0] if Result else "No se encontró la clave 'reviews' en json_result") 
+
+
+
+
+    # Código adicional no usado pero pedido en el Lab:
+
     if json_result:
         # Get the review list in JSON as dealers_review
         dealers_review = json_result["reviews"]
-
-        # print(dealers_review)
 
         # For each review object
         for review in dealers_review:
             # Get its content in `doc` object
             review_doc = review  # Assuming each review is a dictionary
-            # Create a CarDealer object with values in `doc` object
+            # Create a CarReview object with values in `doc` object
             review_obj = DealerReview(
                 id=review_doc["id"],
                 name=review_doc["name"],
@@ -97,6 +116,9 @@ def get_dealer_reviews_from_cf(url, **kwargs):
                 car_year=review_doc["car_year"],
                 # sentiment=review_doc["sentiment"]
             )
-            results.append(review_obj)
+      
+    # fin Código adicional no usado pero pedido en el Lab:        
+            
+            
 
     return results
