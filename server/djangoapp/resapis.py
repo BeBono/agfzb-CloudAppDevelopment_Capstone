@@ -127,9 +127,24 @@ def get_dealer_reviews_from_cf(url, id):
         Result = [review["review"] for review in json_result["reviews"] if review["id"] == id]
         
         # Muestra el resultado sin comas ni corchetes:
-        results.append(Result[0] if Result else "No se encontró la clave 'reviews' en json_result") 
+        # results.append(Result[0] if Result else "No se encontró la clave 'reviews' en json_result")
 
+        result_string = {Result[0]} if Result else "No se encontró la clave 'reviews' en json_result"
+        # result_string = ', '.join([f'"{review}"' for review in Result]) if Result else "No se encontró la clave 'reviews' en json_result"
+        
 
+        # result_string = f'"{Result[0]}"' if Result else "No se encontró la clave 'reviews' en json_result"
+        # Agrega el resultado a la lista results
+        
+        # extracted_text = result_string.pop()
+        # print(extracted_text)
+        # print(result_string)
+
+        results.append(result_string)
+        # print(results)
+
+        
+        
 
 
     # Código adicional no usado pero pedido en el Lab:
@@ -202,7 +217,7 @@ def analyze_review_sentiments(dealerreview):
     return(label)
 
 # auto call the metod when start the server
-# analyze_review_sentiments ("I do not know it")
+# analyze_review_sentiments (get_dealer_reviews_from_cf)
 
 
 

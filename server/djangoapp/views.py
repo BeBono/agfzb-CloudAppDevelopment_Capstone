@@ -120,9 +120,19 @@ def get_dealer_details(request, id):
         
         # Get reviews by URL + id ('get_dealer_reviews_from_cf' process from resapis.py and return the result filtered)
         reviewsByid = get_dealer_reviews_from_cf(url, id)
-        # mysentiment = analyze_review_sentiments(reviewsByid)
-        return HttpResponse(reviewsByid)
 
+        # Extrae el texto sin comillas del review consultado
+        pro = reviewsByid[0].pop()
+        # Imprime en la Terminal el texto sin comillas
+        print(pro)
+        # return HttpResponse(pro)
+
+        # La función de NLU acepta como parámetreo o string o texto sin comillas que esté contenido en una variable según las prubas.
+        mySentiment = analyze_review_sentiments(pro)
+        return HttpResponse(mySentiment)
+    
+        # return HttpResponse(reviewsByid)
+        
 
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
