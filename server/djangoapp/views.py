@@ -12,6 +12,7 @@ import json
 
 from .resapis import get_dealers_from_cf
 from .resapis import get_dealer_reviews_from_cf
+from .resapis import analyze_review_sentiments
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -119,6 +120,7 @@ def get_dealer_details(request, id):
         
         # Get reviews by URL + id ('get_dealer_reviews_from_cf' process from resapis.py and return the result filtered)
         reviewsByid = get_dealer_reviews_from_cf(url, id)
+        # mysentiment = analyze_review_sentiments(reviewsByid)
         return HttpResponse(reviewsByid)
 
 

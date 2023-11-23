@@ -1,10 +1,49 @@
+# from imaplib import _Authenticator
 import requests
 import json
 from .models import CarDealer, DealerReview
-from requests.auth import HTTPBasicAuth
+# from requests.auth import HTTPBasicAuth
+
+from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions
 
 
-# (1/2) Method request es necesario para realizar la solitud de los sub-siguientes bloques de código:
+# (1/2) Method-template request es necesario para realizar la solitud de los sub-siguientes bloques de código:
+
+# def get_request(url, **kwargs):
+#     print(kwargs)
+#     print("GET from {} ".format(url))
+#     try:
+
+#         if api_key:
+#         # Call get method of requests library with URL and parameters
+        
+#         # Basic authentication GET
+#             response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
+#                                     auth=HTTPBasicAuth('apikey', api_key))
+        
+#         else:
+#         # no authentication GET
+#         # Call get method of requests library with URL and parameters
+#             response = requests.get(url, headers={'Content-Type': 'application/json'},
+#                                     params=kwargs)
+
+
+#         status_code = response.status_code
+#         print("With status {} ".format(status_code))
+#         json_data = json.loads(response.text)
+#         return json_data
+#     except Exception as e:
+#         # If any error occurs
+#         print("Exception occurred: {}".format(e))
+#         return None
+
+
+
+
+# *****************************
+# Lab Original AI
 
 def get_request(url, **kwargs):
     print(kwargs)
@@ -22,7 +61,7 @@ def get_request(url, **kwargs):
         print("Exception occurred: {}".format(e))
         return None
 
-
+# *****************************
 
 # There are many ways to make HTTP requests in Django.
 # Here we use a very popular and easy-to-use Python library called 'requests' that could be installed as a requirement.txt.
@@ -116,9 +155,76 @@ def get_dealer_reviews_from_cf(url, id):
                 car_year=review_doc["car_year"],
                 # sentiment=review_doc["sentiment"]
             )
+
+            # review_obj.sentiment = analyze_review_sentiments(review_obj.review)
       
     # fin Código adicional no usado pero pedido en el Lab:        
-            
-            
-
+        
     return results
+
+
+
+# Model 1 as per Lab:
+# def analyze_review_sentiments(dealereview):
+
+#     url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/fb1caa68-eac5-4c0f-9e45-754e898db02e"
+#     api_key = "ydISe08oici-Hq2so_Ic47KGTF1KsxK4niyIYpZn_Qiv"
+#     params = dict()
+#     params["text"] = dealereview
+#     params["version"] = "2021-08-01"
+#     params["features"] = "sentiment"
+#     params["return_analyzed_text"] = "True"
+#     response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
+#                                         auth=HTTPBasicAuth('apikey', api_key))
+#     print (response.json())
+
+# analyze_review_sentiments("Yo creo que es bueno")
+#     # return results
+
+
+
+# Model 2 as per IBM / Coursera forum:
+
+def analyze_review_sentiments(dealerreview):
+    url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/fb1caa68-eac5-4c0f-9e45-754e898db02e"
+    api_key = "ydISe08oici-Hq2so_Ic47KGTF1KsxK4niyIYpZn_Qiv"
+    authenticator = IAMAuthenticator(api_key)
+    natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator)
+    natural_language_understanding.set_service_url(url)
+    response = natural_language_understanding.analyze( text=dealerreview,features=Features(sentiment=SentimentOptions(targets=[dealerreview]))).get_result()
+    label=json.dumps(response, indent=2)
+    label = response['sentiment']['document']['label']
+    # label = response['sentiment']
+
+    
+    print(label)
+
+    return(label)
+
+# auto call the metod when start the server
+# analyze_review_sentiments ("I do not know it")
+
+
+
+
+
+
+
+    
+
+# IBM Watson Natural Language Understanding (NLU):
+
+# Cuando usas IBM Watson Natural Language Understanding (NLU) para analizar el sentimiento de un texto, obtendrás una respuesta en formato JSON que contiene información sobre el análisis realizado. La estructura de la respuesta puede variar según los parámetros que hayas configurado en tu solicitud, pero generalmente incluirá información sobre el sentimiento del texto.
+# Aquí hay un ejemplo simplificado de cómo podría ser la respuesta:
+# { "usage": { "text_units": 1, "text_characters": 44, "features": 1 }, "sentiment": { "document": { "score": 0.75, "label": "positive" } }, "language": "en" } 
+# En este ejemplo:
+# •	sentiment.document.score: Es un valor numérico que indica la puntuación de sentimiento del documento. Puede variar de -1 a 1, donde valores más cercanos a 1 indican un sentimiento más positivo y valores más cercanos a -1 indican un sentimiento más negativo.
+# •	sentiment.document.label: Es una etiqueta que describe el sentimiento general del documento. Puede ser "positive", "negative" o "neutral".
+# Estos son solo algunos de los campos posibles en la respuesta. Además del sentimiento, Watson NLU puede proporcionar información sobre entidades, conceptos, emociones, y más, dependiendo de cómo hayas configurado tus solicitudes.
+
+# Related documentation:
+# https://cloud.ibm.com/apidocs/natural-language-understanding?utm_medium=Exinfluencer&utm_source=Exinfluencer&utm_content=000026UJ&utm_term=10006555&utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMCD0321ENSkillsNetwork1046-2022-01-01&code=python#authentication
+# Make sure import:
+# from ibm_watson import NaturalLanguageUnderstandingV1
+# from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+# from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions
