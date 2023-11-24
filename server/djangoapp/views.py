@@ -98,6 +98,13 @@ def registration_request(request):
 
 
 
+# To view Home test (to be deleted)
+
+def get_home(request):
+    context = {}
+    if request.method == "GET":
+        return render(request, 'djangoapp/index.html', context)
+
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 
 def get_dealerships(request):
@@ -118,20 +125,16 @@ def get_dealer_details(request, id):
     if request.method == "GET":
         url = "http://127.0.0.1:5500/cloudant/data/reviews-full.json"
         
-        # Get reviews by URL + id ('get_dealer_reviews_from_cf' process from resapis.py and return the result filtered)
+        # Get reviews by URL + id ('get_dealer_reviews_from_cf' process from resapis.py and return the result filtered). The result is a review by id:
+        #example [{'Text's review'}]. Observe by print(reviewsByid).
         reviewsByid = get_dealer_reviews_from_cf(url, id)
-
-        # Extrae el texto sin comillas del review consultado
-        pro = reviewsByid[0].pop()
-        # Imprime en la Terminal el texto sin comillas
-        print(pro)
-        # return HttpResponse(pro)
-
-        # La función de NLU acepta como parámetreo o string o texto sin comillas que esté contenido en una variable según las prubas.
-        mySentiment = analyze_review_sentiments(pro)
-        return HttpResponse(mySentiment)
-    
-        # return HttpResponse(reviewsByid)
+        
+        # Retrive the text to able to run in NLU funcion (analyze_review_sentiments)
+        # La función de NLU acepta como parámetreo o string (directamente como parámetro "text") o texto sin comillas validao por terminal que se el resultado de imprimmir variable según las pruebas.
+        textReviw = reviewsByid[0].pop()
+  
+        mySentiment = analyze_review_sentiments(textReviw)
+        return HttpResponse(textReviw  + "   : " + mySentiment)
         
 
 # Create a `add_review` view to submit a review

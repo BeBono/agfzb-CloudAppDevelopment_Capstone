@@ -26,6 +26,9 @@ urlpatterns = [
     # path for logout
     path('logout/', views.logout_request, name='logout'),
 
+
+    # path for home test (to be deleted)
+    path(route='home/', view=views.get_home, name='get_home'),
     
     # path for dealer view
     path(route='', view=views.get_dealerships, name='index'),

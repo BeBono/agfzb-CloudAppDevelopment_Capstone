@@ -43,7 +43,7 @@ from ibm_watson.natural_language_understanding_v1 import Features, SentimentOpti
 
 
 # *****************************
-# Lab Original AI
+# Lab Original by AI (1/2)
 
 def get_request(url, **kwargs):
     print(kwargs)
@@ -86,6 +86,8 @@ def get_dealers_from_cf(url, **kwargs):
         # Get the dealer list in JSON as dealers
         dealers = json_result["dealerships"]
 
+
+        # The following code is use to loading data for ´CarDealer´ in model.py
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
@@ -125,29 +127,14 @@ def get_dealer_reviews_from_cf(url, id):
     if "reviews" in json_result:
         # Filtrar las revisiones por el id proporcionado
         Result = [review["review"] for review in json_result["reviews"] if review["id"] == id]
-        
-        # Muestra el resultado sin comas ni corchetes:
-        # results.append(Result[0] if Result else "No se encontró la clave 'reviews' en json_result")
-
+        #Retrive the review text into [{´´}] that will be processed in resapis.py to be able to woring with Watson NLU that require type sting or text without "comillas" into a variable.
         result_string = {Result[0]} if Result else "No se encontró la clave 'reviews' en json_result"
-        # result_string = ', '.join([f'"{review}"' for review in Result]) if Result else "No se encontró la clave 'reviews' en json_result"
-        
-
-        # result_string = f'"{Result[0]}"' if Result else "No se encontró la clave 'reviews' en json_result"
-        # Agrega el resultado a la lista results
-        
-        # extracted_text = result_string.pop()
-        # print(extracted_text)
-        # print(result_string)
 
         results.append(result_string)
         # print(results)
 
-        
-        
 
-
-    # Código adicional no usado pero pedido en el Lab:
+    # The following code is use to loading data for ´DealerReview´ in model.py for all reviews:
 
     if json_result:
         # Get the review list in JSON as dealers_review
@@ -168,12 +155,9 @@ def get_dealer_reviews_from_cf(url, id):
                 car_make=review_doc["car_make"],
                 car_model=review_doc["car_model"],
                 car_year=review_doc["car_year"],
-                # sentiment=review_doc["sentiment"]
+                # sentiment=review_doc["sentiment"]  // No used by staff instruccions (Rikkita) 
             )
-
-            # review_obj.sentiment = analyze_review_sentiments(review_obj.review)
-      
-    # fin Código adicional no usado pero pedido en el Lab:        
+                   
         
     return results
 

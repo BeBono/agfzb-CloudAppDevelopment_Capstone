@@ -151,7 +151,7 @@ class DealerReview:
         self.car_model = car_model
         # Dealer zip
         self.car_year = car_year
-        # Sentiment from NLU by IBM Cloud service
+        # Sentiment from NLU by IBM Cloud service (No implemented like atribute by instructions of Staff lab)
         # self.sentiment = sentiment
 
     def __str__(self):
