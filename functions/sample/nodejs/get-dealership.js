@@ -61,3 +61,8 @@ app.get('/dealerships/get', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+
+// To run in localhost
+
+// http://127.0.0.1:3000/dealerships/get
