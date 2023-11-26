@@ -77,9 +77,6 @@ def get_reviews():
     # Return the data as JSON
     return jsonify(reviewsDictionay)
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
 
 
 # ******************************************************
