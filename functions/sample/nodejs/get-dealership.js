@@ -21,6 +21,7 @@ async function dbCloudantConnect() {
 }
 
 let db;
+// console.log(bd)
 
 (async () => {
     db = await dbCloudantConnect();
@@ -52,8 +53,14 @@ app.get('/dealerships/get', (req, res) => {
             console.error('Error fetching dealerships:', err);
             res.status(500).json({ error: 'An error occurred while fetching dealerships.' });
         } else {
-            const dealerships = body.docs;
-            res.json(dealerships);
+            // const dealerships = body.docs;
+            // res.json(dealerships);
+
+
+            const PREdealerships = body.docs;
+            const PROdealerships =  {dealerships: PREdealerships}
+            res.json(PROdealerships);
+           
         }
     });
 });
