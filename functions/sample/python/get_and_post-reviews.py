@@ -16,40 +16,73 @@ db = client['reviews']
 
 app = Flask(__name__)
 
+
+# ********** 1 version (lab) to retrive reviews by 'id':
+# @app.route('/api/get_reviews', methods=['GET'])
+# def get_reviews():
+#     dealership_id = request.args.get('id')
+
+#     # Check if "id" parameter is missing
+#     if dealership_id is None:
+#         return jsonify({"error": "Missing 'id' parameter in the URL"}), 400
+
+#     # Convert the "id" parameter to an integer (assuming "id" should be an integer)
+#     try:
+#         dealership_id = int(dealership_id)
+#     except ValueError:
+#         return jsonify({"error": "'id' parameter must be an integer"}), 400
+
+#     # Define the query based on the 'dealership' ID
+#     selector = {
+#         # 'dealership': dealership_id      # before  
+#         'id': dealership_id                # now
+    
+#     }
+
+#     # Execute the query using the query method
+#     result = db.get_query_result(selector)
+
+#     # Create a list to store the documents
+#     data_list = []
+
+#     # Iterate through the results and add documents to the list
+#     for doc in result:
+#         data_list.append(doc)
+
+#     # Return the data as JSON
+#     return jsonify(data_list)
+
+# ********** 2 version to retrive all reviews's object:
+
 @app.route('/api/get_reviews', methods=['GET'])
 def get_reviews():
-    dealership_id = request.args.get('id')
-
-    # Check if "id" parameter is missing
-    if dealership_id is None:
-        return jsonify({"error": "Missing 'id' parameter in the URL"}), 400
-
-    # Convert the "id" parameter to an integer (assuming "id" should be an integer)
-    try:
-        dealership_id = int(dealership_id)
-    except ValueError:
-        return jsonify({"error": "'id' parameter must be an integer"}), 400
-
-    # Define the query based on the 'dealership' ID
-    selector = {
-        # 'dealership': dealership_id      # before  
-        'id': dealership_id                # now
-    
-    }
-
-    # Execute the query using the query method
-    result = db.get_query_result(selector)
+    # Use all_docs to get all documents in the database
+    result = db.all_docs(include_docs=True)
 
     # Create a list to store the documents
     data_list = []
 
     # Iterate through the results and add documents to the list
-    for doc in result:
+    for row in result['rows']:
+        # Extract the document from the row
+        doc = row['doc']
         data_list.append(doc)
+    
+    # Ya que 'data_list' se muestra de la forma [{}] el siguiente código transforma para que sea de 
+    # la forma {"reviews": []} dicionaario para que pueda incluir la propiedad "reviews" que está 
+    # parametrizada en 'resapis.py' y se pueda procesar como tal.
+        reviewsDictionay = {"reviews" : data_list}
+
 
     # Return the data as JSON
-    return jsonify(data_list)
+    return jsonify(reviewsDictionay)
 
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
+# ******************************************************
 
 @app.route('/api/post_review', methods=['POST'])
 def post_review():
