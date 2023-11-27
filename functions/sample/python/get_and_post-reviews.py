@@ -129,7 +129,7 @@ def modify_review():
 
     return jsonify({"message": "Review modified successfully"}), 200
 
-# ******************
+# *******************
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -123,14 +123,15 @@ def get_dealerships(request):
 # Según las pruebas, 'request' corresponde a 'url' y 'id' al parámetro id en urls.py (path(route='dealer/<int:id>').
 def get_dealer_details(request, id):
     if request.method == "GET":
-        url = "http://127.0.0.1:5500/cloudant/data/reviews-full.json"
-        
+        # Data retrived from Cloudant through Web API in get_and_post-reviews.py
+        url = "http://127.0.0.1:5000/api/get_reviews"
+
         # Get reviews by URL + id ('get_dealer_reviews_from_cf' process from resapis.py and return the result filtered). The result is a review by id:
         #example [{'Text's review'}]. Observe by print(reviewsByid).
         reviewsByid = get_dealer_reviews_from_cf(url, id)
         
         # Retrive the text to able to run in NLU funcion (analyze_review_sentiments)
-        # La función de NLU acepta como parámetreo o string (directamente como parámetro "text") o texto sin comillas validao por terminal que se el resultado de imprimmir variable según las pruebas.
+        # La función de NLU acepta como parámetreo o string (directamente como parámetro "text") o texto sin comillas validado por terminal que se el resultado de imprimmir variable según las pruebas.
         textReviw = reviewsByid[0].pop()
   
         mySentiment = analyze_review_sentiments(textReviw)
