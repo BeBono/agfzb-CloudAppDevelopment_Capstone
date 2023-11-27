@@ -100,6 +100,37 @@ def post_review():
 
     return jsonify({"message": "Review posted successfully"}), 201
 
+
+    # ***************PUT
+
+@app.route('/api/modify_review', methods=['PUT'])
+def modify_review():
+    if not request.json:
+        abort(400, description='Invalid JSON data')
+    
+    # Extract review data from the request JSON
+    review_data = request.json
+
+    # Validate that the required fields are present in the review data
+    required_fields = ['_id', 'id', 'name', 'dealership', 'review', 'purchase', 'purchase_date', 'car_make', 'car_model', 'car_year']
+    for field in required_fields:
+        if field not in review_data:
+            abort(400, description=f'Missing required field: {field}')
+
+    # Get the existing document from the database based on the '_id'
+    existing_doc = db[review_data['_id']]
+
+    # Update the existing document with the new data
+    for field in review_data:
+        existing_doc[field] = review_data[field]
+
+    # Save the modified document
+    existing_doc.save()
+
+    return jsonify({"message": "Review modified successfully"}), 200
+
+# ******************
+
 if __name__ == '__main__':
     app.run(debug=True)
 
