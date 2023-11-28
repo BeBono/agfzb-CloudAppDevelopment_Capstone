@@ -75,7 +75,7 @@ def get_request(url, **kwargs):
 
 
 
-# Request HTTP Dealer (2/2):
+# Request HTTP Dealer short_name (2/2):
        
 def get_dealers_from_cf(url, **kwargs):
     # arreglo que contendrá el resultado final
@@ -163,26 +163,7 @@ def get_dealer_reviews_from_cf(url, id):
 
 
 
-# Model 1 as per Lab:
-# def analyze_review_sentiments(dealereview):
-
-#     url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/fb1caa68-eac5-4c0f-9e45-754e898db02e"
-#     api_key = "ydISe08oici-Hq2so_Ic47KGTF1KsxK4niyIYpZn_Qiv"
-#     params = dict()
-#     params["text"] = dealereview
-#     params["version"] = "2021-08-01"
-#     params["features"] = "sentiment"
-#     params["return_analyzed_text"] = "True"
-#     response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
-#                                         auth=HTTPBasicAuth('apikey', api_key))
-#     print (response.json())
-
-# analyze_review_sentiments("Yo creo que es bueno")
-#     # return results
-
-
-
-# Model 2 as per IBM / Coursera forum:
+# Model as per IBM / Coursera forum:
 
 def analyze_review_sentiments(dealerreview):
     url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/fb1caa68-eac5-4c0f-9e45-754e898db02e"
@@ -200,17 +181,6 @@ def analyze_review_sentiments(dealerreview):
 
     return(label)
 
-# auto call the metod when start the server
-# analyze_review_sentiments (get_dealer_reviews_from_cf)
-
-
-
-
-
-
-
-    
-
 # IBM Watson Natural Language Understanding (NLU):
 
 # Cuando usas IBM Watson Natural Language Understanding (NLU) para analizar el sentimiento de un texto, obtendrás una respuesta en formato JSON que contiene información sobre el análisis realizado. La estructura de la respuesta puede variar según los parámetros que hayas configurado en tu solicitud, pero generalmente incluirá información sobre el sentimiento del texto.
@@ -227,3 +197,10 @@ def analyze_review_sentiments(dealerreview):
 # from ibm_watson import NaturalLanguageUnderstandingV1
 # from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 # from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions
+
+
+
+# **************************** POST
+# post_request(url, json_payload, **kwargs):
+    # requests.post(url, params=kwargs, json=json_payload)
+

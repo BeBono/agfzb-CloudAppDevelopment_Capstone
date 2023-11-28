@@ -137,7 +137,7 @@ if __name__ == '__main__':
 
     # To roun in locals
 
-    # http://127.0.0.1:5000/api/get_reviews?id=1
+    # http://127.0.0.1:5000/api/get_reviews?id=1 (example with id = 1)
 
     # http://localhost:5000/api/post_review
 
