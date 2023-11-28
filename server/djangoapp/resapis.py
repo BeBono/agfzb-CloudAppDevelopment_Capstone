@@ -117,22 +117,42 @@ def get_dealers_from_cf(url, **kwargs):
 # El resultado de este request (filtro) es llamado por view.py dentro de 'def get_dealer_details' para ser presentado. En este caso,
 # un filtro del atributo/propiedad 'review' del objeto/reviews de acuerdo al 'id' que concuerde con el id de la url (eje: http://127.0.0.1:8000/djangoapp/dealer/10).
 
+# def get_dealer_reviews_from_cf(url, id):
+#     # arreglo que contendrá el resultado final
+#     results = []
+#     # Call get_request with a URL parameter
+#     json_result = get_request(url, id=id)
+
+#     # # Verificar si json_result tiene la clave "reviews"
+#     if "reviews" in json_result:
+#         # Filtrar las revisiones por el id proporcionado
+#         Result = [review["review"] for review in json_result["reviews"] if review["id"] == id]
+#         #Retrive the review text into [{´´}] that will be processed in resapis.py to be able to woring with Watson NLU that require type sting or text without "comillas" into a variable.
+#         result_string = {Result[0]} if Result else "No se encontró la clave 'reviews' en json_result"
+
+#         results.append(result_string)
+#         # print(results)
+
+
+# ***********************Lista de reviews según "id" coincidentes
+
 def get_dealer_reviews_from_cf(url, id):
-    # arreglo que contendrá el resultado final
+        # arreglo que contendrá el resultado final
     results = []
-    # Call get_request with a URL parameter
+        # Call get_request with a URL parameter
     json_result = get_request(url, id=id)
 
-    # # Verificar si json_result tiene la clave "reviews"
-    if "reviews" in json_result:
-        # Filtrar las revisiones por el id proporcionado
-        Result = [review["review"] for review in json_result["reviews"] if review["id"] == id]
-        #Retrive the review text into [{´´}] that will be processed in resapis.py to be able to woring with Watson NLU that require type sting or text without "comillas" into a variable.
-        result_string = {Result[0]} if Result else "No se encontró la clave 'reviews' en json_result"
+        # # Verificar si json_result tiene la clave "reviews"
+    # if "reviews" in json_result:
+            # Filtrar las revisiones por el id proporcionado
+    Result = [review["review"] for review in json_result["reviews"] if review["id"] == id]
+            # Almacenar todas las revisiones coincidentes en la lista results
+    results.extend(Result)
+    
+    # print(results)
 
-        results.append(result_string)
-        # print(results)
 
+        #************************************** 
 
     # The following code is use to loading data for ´DealerReview´ in model.py for all reviews:
 
@@ -201,6 +221,7 @@ def analyze_review_sentiments(dealerreview):
 
 
 # **************************** POST
-# post_request(url, json_payload, **kwargs):
-    # requests.post(url, params=kwargs, json=json_payload)
-
+def post_request(url, json_payload, **kwargs):
+    # url =  "5000-URL/api/post_review"
+    response = requests.post(url, params=kwargs, json=json_payload)
+    return response

@@ -13,6 +13,7 @@ import json
 from .resapis import get_dealers_from_cf
 from .resapis import get_dealer_reviews_from_cf
 from .resapis import analyze_review_sentiments
+from .resapis import post_request
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -126,28 +127,100 @@ def get_dealer_details(request, id):
         # Data retrived from Cloudant through Web API in get_and_post-reviews.py
         url = "http://127.0.0.1:5000/api/get_reviews"
 
-        # Get reviews by URL + id ('get_dealer_reviews_from_cf' process from resapis.py and return the result filtered). The result is a review by id:
-        #example [{'Text's review'}]. Observe by print(reviewsByid).
-        reviewsByid = get_dealer_reviews_from_cf(url, id)
-        
-        # Retrive the text to able to run in NLU funcion (analyze_review_sentiments)
-        # La función de NLU acepta como parámetreo o string (directamente como parámetro "text") o texto sin comillas validado por terminal que se el resultado de imprimmir variable según las pruebas.
-        textReviw = reviewsByid[0].pop()
-  
-        mySentiment = analyze_review_sentiments(textReviw)
-        return HttpResponse(textReviw  + "   : " + mySentiment)
-        
+# Code by one resulta at time*******************
+        # reviewsByid = get_dealer_reviews_from_cf(url, id)
+        # textReview = reviewsByid[1]
+        # print(textReview)
+        # return HttpResponse(analyze_review_sentiments(textReview))
+#   *****************************************
 
-# Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
-# ...
+    # Obtener las revisiones del concesionario
+    reviewsByid = get_dealer_reviews_from_cf(url, id)
 
-# User authenticated:
-# {% if user.is_authenticated %}
+    # Inicializar una lista para almacenar los resultados de sentimiento
+    results = []
 
+    # Iterar sobre cada revisión y procesarla con la función NLU sentiment
+    for review in reviewsByid:
+        textReview = review
+        mySentiment = analyze_review_sentiments(textReview)
+
+        # Agregar el resultado al lista de resultados
+        results.append(f"{textReview} : {mySentiment}")
+
+    # Devolver la lista de resultados como una cadena
+    return HttpResponse("\n".join(results))
+
+# ************************************************
+
+
+# Create a `add_review` view to submit a review (version Week 3 by POSTAMAN)
+
+def add_review(request, id):
     
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            # car_id = request.POST["car"]
+            # car = CarModel.objects.get(pk=car_id)
+            review_post_url = "5000-url/api/post_review"
+            review = {
+                "id":id,
+                "time":datetime.utcnow().isoformat(),
+                "name":["name"],
+                "dealership" :id,                
+                "review": ["content"],
+                "purchase": True,
+                "another": ["another"],
+                "purchase_date":["purchase_date"],
+                "car_make": ["car_make"],  
+                "car_model": ["car_model"],
+                "car_year": ["car_year"],  
+            }
+            review=json.dumps(review,default=str)
+            new_payload1 = {}
+            new_payload1["review"] = review
+            print("\nREVIEW:",review)
+            post_request(review_post_url, review, id = id)
+        return redirect("djangoapp:dealer_details", id = id)
 
 
-# {% else %}
-    # index to sign up
-# {% endif %}
+
+
+
+# Create a `add_review` view to submit a review (final presentation):
+
+# def add_review(request, id):
+#     context = {}
+#     url = "3000-URL/dealerships/get"
+#     dealer = get_dealer_by_id_from_cf(url, id)
+#     context["dealer"] = dealer    
+#     if request.method == 'GET':
+#         # Get cars for the dealer
+#         cars = CarModel.objects.all()
+#         print(cars)
+#         context["cars"] = cars
+#         return render(request, 'djangoapp/add_review.html', context)
+    
+#     elif request.method == 'POST':
+#         if request.user.is_authenticated:
+#             car_id = request.POST["car"]
+#             car = CarModel.objects.get(pk=car_id)
+#             review_post_url = "5000-url/api/post_review"
+#             review = {
+#                 "id":id,
+#                 "time":datetime.utcnow().isoformat(),
+#                 "name":request.user.username,  # Assuming you want to use the authenticated user's name
+#                 "dealership" :id,                
+#                 "review": request.POST["content"],  # Extract the review from the POST request
+#                 "purchase": True,  # Extract purchase info from POST
+#                 "purchase_date":request.POST["purchasedate"],  # Extract purchase date from POST
+#                 "car_make": car.car_make.name,  # Extract car make from POST
+#                 "car_model": car.name,  # Extract car model from POST
+#                 "car_year": int(car.year.strftime("%Y")),  # Extract car year from POST
+#             }
+#             review=json.dumps(review,default=str)
+#             new_payload1 = {}
+#             new_payload1["review"] = review
+#             print("\nREVIEW:",review)
+#             post_request(review_post_url, review, id = id)
+#         return redirect("djangoapp:dealer_details", id = id)
