@@ -11,6 +11,54 @@
 
 </head>
     <body>
-    <!--Add review form here -->
+        <form action="{% url 'djangoapp:addreview' %}" method="post">
+            <div class="container"> <!--Style root div with .container class -->
+              {% csrf_token %}
+              <h1>Test_addreview</h1>
+              <hr>
+              <div class="form-group"> <!--Style second div with .form-group class -->
+
+                  <label for="id"><b>id</b></label>
+                  <input type="text" class="form-control" style="width: 230px;" placeholder="id: " name="id" required> <!--Style input with .form-control class -->
+                  
+                  <label for="review"><b>review</b></label>
+                  <input type="text" class="form-control" style="width: 230px;" placeholder="review: " name="review" required> <!--Style input with .form-control class -->
+                  
+                  <label for="name"><b>Name</b></label>
+                  <input type="text" class="form-control" style="width: 230px;" placeholder="name: " name="name" required> <!--Style input with .form-control class -->
+                  
+                  <label for="dealership"><b>dealership</b></label>
+                  <input type="text" class="form-control" style="width: 230px;" placeholder="dealership: " name="dealership" required> <!--Style input with .form-control class -->
+                  
+                  <label for="purchase"><b>purchase</b></label>
+                  <input type="text" class="form-control" style="width: 230px;" placeholder="purchase: " name="purchase" required> <!--Style input with .form-control class -->
+
+                  <label for="another"><b>another</b></label>
+                  <input type="text" class="form-control" style="width: 230px;" placeholder="another: " name="another" required> <!--Style input with .form-control class -->
+
+                  <label for="purchase_date"><b>purchase_date</b></label>
+                  <input type="text" class="form-control" style="width: 230px;" placeholder="purchase_date: " name="purchase_date" required> <!--Style input with .form-control class -->
+
+                  <label for="car_make""><b>car_make</b></label>
+                  <input type="text" class="form-control" style="width: 230px;" placeholder="car_make: " name="car_make" required> <!--Style input with .form-control class -->
+                  
+                  <label for="car_model"><b>car_model</b></label>
+                  <input type="text" class="form-control" style="width: 230px;" placeholder="car_model: " name="car_model" required> <!--Style input with .form-control class -->
+                  
+                  <label for="car_year"><b>car_year</b></label>
+                  <input type="text" class="form-control" style="width: 230px;" placeholder="car_year: " name="car_year" required>
+
+                  <label for="time"><b>time</b></label>
+                  <input type="text" class="form-control" style="width: 230px;" placeholder="time: " name="time" required>
+                  
+                  <!-- {% if message %}
+                  <div class="alert alert-warning"> <!--Style the message paragraph with .alert and .alert-warning class -->
+                      <!-- {{ message }} -->
+                  <!-- </div> -->
+                  <!-- {% endif %} -->
+                  <hr> 
+                  <button class="btn btn-primary" type="submit">Sign up</button>
+            </div>
+          </form>
     </body>
 </html>

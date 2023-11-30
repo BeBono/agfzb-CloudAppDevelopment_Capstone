@@ -38,6 +38,11 @@ urlpatterns = [
  
 
     # path for add a review view
-    path(route='addreview/<int:id>', view=views.add_review, name='addreview')
+    # path(route='addreview/<int:id>', view=views.add_review, name='addreview'),
+    path(route='addreview/', view=views.add_review, name='addreview'),
+
+    # path for add a review view
+    path(route='post/', view=views.review_form, name='review_form')
+    
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

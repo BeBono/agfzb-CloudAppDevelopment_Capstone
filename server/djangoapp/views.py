@@ -105,6 +105,14 @@ def get_home(request):
     context = {}
     if request.method == "GET":
         return render(request, 'djangoapp/index.html', context)
+    
+
+# To view to add POST test (to be deleted)
+
+def review_form(request):
+    context = {}
+    if request.method == "GET":
+        return render(request, 'djangoapp/add_review.html', context)
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 
@@ -147,8 +155,8 @@ def get_dealer_details(request, id):
 
         # Agregar el resultado al lista de resultados
         results.append(f"{textReview} : {mySentiment}")
-
-    # Devolver la lista de resultados como una cadena
+        
+            # Devolver la lista de resultados como una cadena
     return HttpResponse("\n".join(results))
 
 # ************************************************
@@ -156,32 +164,54 @@ def get_dealer_details(request, id):
 
 # Create a `add_review` view to submit a review (version Week 3 by POSTAMAN)
 
-def add_review(request, id):
+# def add_review(request, id):
+def add_review(request):
     
     if request.method == 'POST':
-        if request.user.is_authenticated:
+            # print(request.POST)
+        # if request.user.is_authenticated:
+            # print(csrf_token)
             # car_id = request.POST["car"]
             # car = CarModel.objects.get(pk=car_id)
-            review_post_url = "5000-url/api/post_review"
+            review_post_url = "http://127.0.0.1:5000/api/post_review"
             review = {
-                "id":id,
-                "time":datetime.utcnow().isoformat(),
-                "name":["name"],
-                "dealership" :id,                
-                "review": ["content"],
+                "id": request.POST['id'],
+                "time": request.POST["time"],
+                "name": request.POST["name"],
+                "dealership": request.POST['id'],                
+                "review": request.POST["review"],
                 "purchase": True,
-                "another": ["another"],
-                "purchase_date":["purchase_date"],
-                "car_make": ["car_make"],  
-                "car_model": ["car_model"],
-                "car_year": ["car_year"],  
+                "another": request.POST["another"],
+                "purchase_date":request.POST["purchase_date"],
+                "car_make": request.POST["car_make"],  
+                "car_model": request.POST["car_model"],
+                "car_year": request.POST["car_year"]  
             }
-            review=json.dumps(review,default=str)
+
+
+
+            # review = {
+            #     "id":id,
+            #     # "time":datetime.utcnow().isoformat(),
+            #     "time":["time"],
+            #     "name":["name"],
+            #     "dealership" :id,                
+            #     "review": ["content"],
+            #     "purchase": True,
+            #     "another": ["another"],
+            #     "purchase_date":["purchase_date"],
+            #     "car_make": ["car_make"],  
+            #     "car_model": ["car_model"],
+            #     "car_year": ["car_year"],  
+            # }
+
+            # review=json.dumps(review,default=str)
             new_payload1 = {}
             new_payload1["review"] = review
-            print("\nREVIEW:",review)
-            post_request(review_post_url, review, id = id)
-        return redirect("djangoapp:dealer_details", id = id)
+            # print("\nREVIEW:",review)
+            post_request(review_post_url, review)
+    return redirect ("djangoapp:get_home")
+        # return render(request, 'djangoapp/index.html')
 
 
 
