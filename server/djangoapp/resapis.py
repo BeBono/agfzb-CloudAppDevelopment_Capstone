@@ -223,6 +223,6 @@ def analyze_review_sentiments(dealerreview):
 # **************************** POST
 def post_request(url, json_payload, **kwargs):
     url= "http://127.0.0.1:5000/api/post_review"
-    # response = requests.post(url, params=kwargs, json=json_payload)
-    response = requests.post(url, json=json_payload)
+    response = requests.post(url, params=kwargs, json=json_payload)
+    # response = requests.post(url, json=json_payload)
     return response
