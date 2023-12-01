@@ -14,6 +14,7 @@ from .resapis import get_dealers_from_cf
 from .resapis import get_dealer_reviews_from_cf
 from .resapis import analyze_review_sentiments
 from .resapis import post_request
+from .resapis import get_dealer_by_id_from_cf
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -120,6 +121,16 @@ def get_dealerships(request):
         # Return a list of dealer short name
         return HttpResponse(dealer_names)
     
+
+# Get dealer name by id view
+
+def get_name(request, id):
+    if request.method == "GET":
+        url = "http://127.0.0.1:3000/dealerships/get"
+        # Get dealers from the URL
+        dealership = get_dealer_by_id_from_cf(url, id)
+        return HttpResponse(dealership)
+
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer

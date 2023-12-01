@@ -30,15 +30,18 @@ urlpatterns = [
     # path for home test (to be deleted)
     path(route='home/', view=views.get_home, name='get_home'),
     
-    # path for dealer view
+    # path for all dealer names view tests
     path(route='', view=views.get_dealerships, name='index'),
 
+
+    # Dealer name by id
+    path(route='dealerbyid/<int:id>',view=views.get_name, name='dealer_name'),
+
     # path for dealer reviews view
-    path(route='dealer/<int:id>', view=views.get_dealer_details, name='dealer_details'),
+    path(route='reviewdealer/<int:id>', view=views.get_dealer_details, name='dealer_details'),
  
 
-    # path for add a review view
-    # path(route='addreview/<int:id>', view=views.add_review, name='addreview'),
+    # path for add a review view (function)
     path(route='addreview/', view=views.add_review, name='addreview'),
 
     # path for add a review view
