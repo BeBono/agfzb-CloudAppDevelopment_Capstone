@@ -156,21 +156,19 @@ def get_dealer_details(request, id):
 # ************************************************
 
 
-# To view to whow form (to be deleted)
-
+# To show form with 'id' as part of URL.
 def review_form(request, id):
     print(id)
     context = {}
     if request.method == "GET":
+        # to pass the 'id' variable to contex as value into form add_review by defoult value= "{{di}}"
         context = {'id': id}
         return render(request, 'djangoapp/add_review.html', context)
         
 
 
 
-# Create a `add_review` view to submit a review (version Week 3 by POSTAMAN)
-
-# def add_review(request, id):
+# Create a `add_review` view to submit a review
 def add_review(request):
 
     #  if request.method == 'GET':
@@ -194,6 +192,7 @@ def add_review(request):
             # car = CarModel.objects.get(pk=car_id)
             review_post_url = "http://127.0.0.1:5000/api/post_review"
             review = {
+                # int(request.POST["id"]) is the integer hosted into form as value= "{{di}}""
                 "id": int(request.POST["id"]),
                 "time": request.POST["time"],
                 "name": request.POST["name"],
