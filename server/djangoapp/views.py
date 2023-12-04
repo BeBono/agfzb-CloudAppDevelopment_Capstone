@@ -15,6 +15,7 @@ from .resapis import get_dealer_reviews_from_cf
 from .resapis import analyze_review_sentiments
 from .resapis import post_request
 from .resapis import get_dealer_by_id_from_cf
+from .resapis import get_request
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -112,14 +113,33 @@ def get_home(request):
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 
 def get_dealerships(request):
+    # Dictionary empty called 'context'
+    
     if request.method == "GET":
+        context= {}
         url = "http://127.0.0.1:3000/dealerships/get"
         # Get dealers from the URL
-        dealerships = get_dealers_from_cf(url)
+        # predealerships = get_dealers_from_cf(url)
+        predealerships = get_request(url)
+        dealerships = predealerships["dealerships"]
+        # print(dealerships)
+
+       
+        
         # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
-        # Return a list of dealer short name
-        return HttpResponse(dealer_names)
+        # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+
+        # Adding the key "dealerships" to list of dealers fetch from get_dealers_from_cf(url)-
+        # Example of result for this exercise: mydictionary = {"key": [1, 2, 3]}
+        context["dealership_list"] = dealerships
+        # test = context["mydealers"]
+        print(context)
+        # # Return a list of dealer short name
+        # return HttpResponse(dealer_names)
+
+        # dealerships = get_request (url)
+        # context["dealerships"] = dealerships
+    return render(request, 'djangoapp/index.html', context)
     
 
 # Get dealer name by id view

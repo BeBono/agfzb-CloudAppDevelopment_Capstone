@@ -105,6 +105,7 @@ def get_dealers_from_cf(url, **kwargs):
                 zip=dealer_doc["zip"]
             )
             results.append(dealer_obj)
+            # print(dealer_obj)
       
     return results
 
