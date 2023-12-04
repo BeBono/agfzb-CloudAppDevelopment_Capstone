@@ -98,7 +98,8 @@ class CarModel(models.Model):
 # extraídos de la base de datos (from Cloudant) y mostrarlos en la interfaz de usuario, 
 # sin necesidad de persistir esos datos en la base de datos mediante migraciones de Django.
 
-# Also the 'Class CarDealer' data are used in resapis.py to retrive this data from there.
+# Also the 'Class CarDealer' data (is like a template) are used in resapis.py to retrive this data from there.
+# The CarDealer() in resapis.py is one instance of this class:
 
 class CarDealer:
 

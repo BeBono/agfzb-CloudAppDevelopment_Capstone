@@ -119,27 +119,22 @@ def get_dealerships(request):
         # Dictionary empty called 'context'
         context= {}
         url = "http://127.0.0.1:3000/dealerships/get"
-        # Get dealers from the URL
-        # predealerships = get_dealers_from_cf(url)
+       
+        # To charge data to one instance of CarDealer Class only (no used here).
+        SaveToCarDealer = get_dealers_from_cf(url)
+
+        # Get dealers from the URL: Dictionaty {"key": [{},{}, ...]}
         predealerships = get_request(url)
+
+        # Obtaining only the list [{},{}, ...]
         dealerships = predealerships["dealerships"]
         # print(dealerships)
 
-       
-        
-        # Concat all dealer's short name
-        # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
-
-        # Adding the key "dealerships" to list of dealers fetch from get_dealers_from_cf(url)-
-        # Example of result for this exercise: mydictionary = {"key": [1, 2, 3]}
+        # Chargin to 'context' variabe the list through to a new key called "dealership_list":
+        #  context = {"dealership_list": [{}, {}, ...]}
+        #  context was created such as empy dictionary since is neccesary to pass it into return:
         context["dealership_list"] = dealerships
-        # test = context["mydealers"]
-        print(context)
-        # # Return a list of dealer short name
-        # return HttpResponse(dealer_names)
 
-        # dealerships = get_request (url)
-        # context["dealerships"] = dealerships
     return render(request, 'djangoapp/index.html', context)
     
 
