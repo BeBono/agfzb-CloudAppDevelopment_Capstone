@@ -113,9 +113,10 @@ def get_home(request):
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 
 def get_dealerships(request):
-    # Dictionary empty called 'context'
+    
     
     if request.method == "GET":
+        # Dictionary empty called 'context'
         context= {}
         url = "http://127.0.0.1:3000/dealerships/get"
         # Get dealers from the URL
