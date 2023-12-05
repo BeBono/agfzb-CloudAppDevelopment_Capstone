@@ -31,7 +31,7 @@ urlpatterns = [
     path(route='home/', view=views.get_home, name='get_home'),
     
     # path for all dealer names view tests
-    path(route='alldealers/', view=views.get_dealerships, name='index'),
+    path(route='dealers/', view=views.get_dealerships, name='index'),
 
 
     # Dealer name by id
