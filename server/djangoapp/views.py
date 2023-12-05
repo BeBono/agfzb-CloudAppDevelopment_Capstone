@@ -154,34 +154,29 @@ def get_name(request, id):
 def get_dealer_details(request, id):
 
     context = {}
-    
+
     if request.method == "GET":
         # Data retrived from Cloudant through Web API in functions/sanple/python/get_and_post-reviews.py
         url = "http://127.0.0.1:5000/api/get_reviews"
 
-# Code by one result at time*******************
-        # reviewsByid = get_dealer_reviews_from_cf(url, id)
-        # textReview = reviewsByid[1]
-        # print(textReview)
-        # return HttpResponse(analyze_review_sentiments(textReview))
-#   *****************************************
-
-    # Obtener las revisiones del concesionario
+    # Obtener las revisiones del concesionario según id
     reviewsByid = get_dealer_reviews_from_cf(url, id)
+    print(reviewsByid)
 
-    # Inicializar una lista para almacenar los resultados de sentimiento
-    results = []
+    # Ricthing "list" of reviews and loading it to context dictionary. (context = {"review_list": {[...]}})
+    context["review_list"]= reviewsByid
+    return render(request, 'djangoapp/dealer_details.html', context)
 
     # Iterar sobre cada revisión y procesarla con la función NLU sentiment
-    for review in reviewsByid:
-        textReview = review
-        mySentiment = analyze_review_sentiments(textReview)
+    # for review in reviewsByid:
+    #     textReview = review
+    #     mySentiment = analyze_review_sentiments(textReview)
 
-        # Agregar el resultado al lista de resultados
-        results.append(f"{textReview} : {mySentiment}")
+    #     # Agregar el resultado al lista de resultados
+    #     results.append(f"{textReview} : {mySentiment}")
         
             # Devolver la lista de resultados como una cadena
-    return HttpResponse("\n".join(results))
+    # return HttpResponse("\n".join(results))
 
 # ************************************************
 

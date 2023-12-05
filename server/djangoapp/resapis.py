@@ -173,14 +173,12 @@ def get_dealer_reviews_from_cf(url, id):
         # Call get_request with a URL parameter
     json_result = get_request(url, id=id)
 
-        # # Verificar si json_result tiene la clave "reviews"
-    # if "reviews" in json_result:
-            # Filtrar las revisiones por el id proporcionado
-    Result = [review["review"] for review in json_result["reviews"] if review["id"] == id]
+    # Result = [review["review"] for review in json_result["reviews"] if review["id"] == id]
+    Result = [review for review in json_result["reviews"] if review["id"] == id]
             # Almacenar todas las revisiones coincidentes en la lista results
     results.extend(Result)
     
-    # print(results)
+    # print(Result)
 
 
         #************************************** 
@@ -228,7 +226,7 @@ def analyze_review_sentiments(dealerreview):
     # label = response['sentiment']
 
     
-    print(label)
+    # print(label)
 
     return(label)
 

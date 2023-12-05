@@ -5,32 +5,29 @@
     <title>Dealership Review</title>
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
 </head>
 
-    <body>
+<body>
 
+    
     <!--Add a nav bar here -->
 
     <nav class="navbar navbar-light bg-light" style="margin-top: 8px">
         <div class="container-fluid">
-           <div class="navbar-header">
-                <!-- <a class="navbar-brand" href="#"> Best Cars - Dealerships </a> -->
-                <h2>Dealership Review</h2>
-           </div>
-              
-           
+            <div><h2>Review for <b>{{ review_list.0.name }}</b></h2></div>
+
+            <!-- ************************ -->
+
            {% if user.is_authenticated %}
-           <div class="">
-            
-            <a href="{% url 'djangoapp:addreview' %}">Add Review</a>
-                    
-                            
+           <div class="">  
+            <a href="{% url 'djangoapp:addreview' %}">Add Review</a>                         
            </div>
            
           
            {% else %}
 
-            <!--Sign Up-->
+            <!-- Sign Up -->
 
                  <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -52,8 +49,11 @@
   
     </nav>
 
-    <!-- Add reviews as cards -->
+    <!-- <div>HOLA</div> -->
 
+    <!-- Add reviews as cards -->
+ 
+    <div>    
     <div class="card-columns">
         {% for dealer in review_list %}
         <div class="card">
@@ -62,16 +62,17 @@
             <img class="card-img-left">
 
             <div class="card-body">
-                <h5 class="card-title">CardModel, CardMake</h5>
-                <h5 class="card-title">Purchase</h5>
-                <p class="card-text">Review</p>
+                <h5 class="card-title">{{dealer.car_model}}, {{dealer.car_make}}</h5>
+                <h5 class="card-title">{{dealer.purchase_date}}</h5>
+                <p class="card-text">{{dealer.review}}</p>
             </div>
             
         </div>
         {% endfor %}
     </div>
+    </div>
 
 
-    </body>
+</body>
 
 </html>
