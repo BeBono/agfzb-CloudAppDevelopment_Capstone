@@ -110,7 +110,7 @@ def get_home(request):
     
 
 
-# Update the `get_dealerships` view to render the index page with a list of dealerships
+# Update the `get_dealerships` view to render the dealerships:
 
 def get_dealerships(request):
     
@@ -152,11 +152,14 @@ def get_name(request, id):
 # Create a `get_dealer_details` view to render the reviews of a dealer
 # Según las pruebas, 'request' corresponde a 'url' y 'id' al parámetro id en urls.py (path(route='dealer/<int:id>').
 def get_dealer_details(request, id):
+
+    context = {}
+    
     if request.method == "GET":
-        # Data retrived from Cloudant through Web API in get_and_post-reviews.py
+        # Data retrived from Cloudant through Web API in functions/sanple/python/get_and_post-reviews.py
         url = "http://127.0.0.1:5000/api/get_reviews"
 
-# Code by one resulta at time*******************
+# Code by one result at time*******************
         # reviewsByid = get_dealer_reviews_from_cf(url, id)
         # textReview = reviewsByid[1]
         # print(textReview)

@@ -11,7 +11,66 @@
 
     <!--Add a nav bar here -->
 
+    <nav class="navbar navbar-light bg-light" style="margin-top: 8px">
+        <div class="container-fluid">
+           <div class="navbar-header">
+                <!-- <a class="navbar-brand" href="#"> Best Cars - Dealerships </a> -->
+                <h2>Dealership Review</h2>
+           </div>
+              
+           
+           {% if user.is_authenticated %}
+           <div class="">
+            
+            <a href="{% url 'djangoapp:addreview' %}">Add Review</a>
+                    
+                            
+           </div>
+           
+          
+           {% else %}
+
+            <!--Sign Up-->
+
+                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Username" name="username" >
+                                <input type="password" class="form-control" placeholder="Password" name="psw" >
+                                <button class="btn btn-primary" type="submit">Login</button>   
+                                <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+
+           {% endif %}
+
+         </div>
+  
+    </nav>
+
     <!-- Add reviews as cards -->
+
+    <div class="card-columns">
+        {% for dealer in review_list %}
+        <div class="card">
+            
+            
+            <img class="card-img-left">
+
+            <div class="card-body">
+                <h5 class="card-title">CardModel, CardMake</h5>
+                <h5 class="card-title">Purchase</h5>
+                <p class="card-text">Review</p>
+            </div>
+            
+        </div>
+        {% endfor %}
+    </div>
+
 
     </body>
 

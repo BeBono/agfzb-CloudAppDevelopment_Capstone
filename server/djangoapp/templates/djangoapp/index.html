@@ -10,7 +10,7 @@
     <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
-    
+
 
 
 </head>
@@ -80,7 +80,7 @@
 
     <!--Add a dealer table here -->
 
-    <table class="table" id="table">
+    <table class="table" id="table" data-filter-control="true">
         <thead>
             <tr>
                 <th data-field="id">ID</th>
@@ -88,7 +88,7 @@
                 <th data-field="city">City</th>
                 <th data-field="address">Address</th>
                 <th data-field="zip">Zip</th>
-                <th data-field="st">State</th>
+                <th data-field="st" data-filter-control="select">State</th>
                 
             </tr>
         </thead>
@@ -116,5 +116,16 @@
         
     </div>
     </body>
+
+
+
+    <!-- scrip to be able the "state" filter in delership list-->
+    <!-- Add a JavaScript snippet to turn-on filter control for the table element: -->
+    <script>
+        $(function() {
+          $('#table').bootstrapTable()
+        })
+      </script>
+      
 
 </html>
