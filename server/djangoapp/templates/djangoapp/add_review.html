@@ -11,56 +11,60 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
 </head>
-    <body>
-        <form action="{% url 'djangoapp:addreview' id %}" method="post">
-            <div class="container"> <!--Style root div with .container class -->
-              {% csrf_token %}
-              <h1>Test_addreview</h1>
-              <hr>
-              <div class="form-group"> <!--Style second div with .form-group class -->
+    <body style="padding: 30px;">
 
-                  <label for="id"><b>id</b></label>
-                  <!-- <input type="number" class="form-control" style="width: 230px;" placeholder="id: " name="id" required> Style input with .form-control class -->
-                  <input type="number" class="form-control" style="width: 230px;" name="id" value="{{ id }}" required >
+        <nav class="navbar navbar-light bg-light" style="margin-bottom: 13px">
+            <div class="container-fluid">
+                <div><h1>Add a review about <b>{{ dealer.full_name }}</b></h1></div>
+    
+                <!-- ************************ -->
+                <!-- Home -->
+                <div class="">  
+                    <a href="{% url 'djangoapp:index' %}">Home</a>                         
+                </div>
+            </div>
+        </nav>
+        
+        <h4>Enter the review content:</h4>  
+    <div style="display: flex; align-items: center; flex-direction: row">
+          
+        <form action="{% url 'djangoapp:addreview' id %}" method="post" style="width: 100%;">
 
-                  <label for="review"><b>review</b></label>
-                  <input type="text" class="form-control" style="width: 230px;" placeholder="review: " name="review" required> <!--Style input with .form-control class -->
-                  
-                  <label for="name"><b>Name</b></label>
-                  <input type="text" class="form-control" style="width: 230px;" placeholder="name: " name="name" required> <!--Style input with .form-control class -->
-                  
-                  <label for="dealership"><b>dealership</b></label>
-                  <input type="text" class="form-control" style="width: 230px;" placeholder="dealership: " name="dealership" required> <!--Style input with .form-control class -->
-                  
-                  <label for="purchase"><b>purchase</b></label>
-                  <input type="text" class="form-control" style="width: 230px;" placeholder="purchase: " name="purchase" required> <!--Style input with .form-control class -->
+            <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
 
-                  <label for="another"><b>another</b></label>
-                  <input type="text" class="form-control" style="width: 230px;" placeholder="another: " name="another" required> <!--Style input with .form-control class -->
+            <div class="container-fluid">
+                
+                <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+                <label class="form-check-label" for="purchasecheck">Has purchased the car from {{ dealer.full_name }} ?</label>
+            </div>
 
-                  <label for="purchase_date"><b>purchase_date</b></label>
-                  <input type="text" class="form-control" style="width: 230px;" placeholder="purchase_date: " name="purchase_date" required> <!--Style input with .form-control class -->
+            <label><h4>Select your car (model-make-year)</h4></label>
+            
+                <select name="car" id="car" class="form-select" required></select>
+                <select name="car" id="car" class="form-select" required>
+                {% for car in cars %}
+                    <option selected value={{car.Dealer_id.id}}>{{car.Name}}-{{car.Makes.name}}-{{ car.year|date:"Y" }}</option>
+                {% endfor %}
+                </select>
 
-                  <label for="car_make""><b>car_make</b></label>
-                  <input type="text" class="form-control" style="width: 230px;" placeholder="car_make: " name="car_make" required> <!--Style input with .form-control class -->
-                  
-                  <label for="car_model"><b>car_model</b></label>
-                  <input type="text" class="form-control" style="width: 230px;" placeholder="car_model: " name="car_model" required> <!--Style input with .form-control class -->
-                  
-                  <label for="car_year"><b>car_year</b></label>
-                  <input type="text" class="form-control" style="width: 230px;" placeholder="car_year: " name="car_year" required>
+                <br>
+                <br>
 
-                  <label for="time"><b>time</b></label>
-                  <input type="text" class="form-control" style="width: 230px;" placeholder="time: " name="time" required>
-                  
-                  <!-- {% if message %}
-                  <div class="alert alert-warning"> <!--Style the message paragraph with .alert and .alert-warning class -->
-                      <!-- {{ message }} -->
-                  <!-- </div> -->
-                  <!-- {% endif %} -->
+            <h4>Select Your Purchase Date:</h4>
+           <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate">
+           {% csrf_token %}
+            <!-- ******************************************* -->
                   <hr> 
                   <button class="btn btn-primary" type="submit">Sign up</button>
             </div>
           </form>
+    </div>
+
+
+        <script type="text/javascript">
+            $('.date-own').datepicker({
+               format: 'mm/dd/yyyy'
+             });
+       </script>
     </body>
 </html>

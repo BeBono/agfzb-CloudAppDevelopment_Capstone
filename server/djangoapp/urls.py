@@ -28,10 +28,10 @@ urlpatterns = [
 
 
     # path for home test (to be deleted)
-    path(route='home/', view=views.get_home, name='get_home'),
+    # path(route='home/', view=views.get_home, name='get_home'),
     
     # path for all dealer names view tests
-    path(route='dealers/', view=views.get_dealerships, name='index'),
+    path(route='home/', view=views.get_dealerships, name='index'),
 
 
     # Dealer name by id

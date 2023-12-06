@@ -16,6 +16,9 @@ from .resapis import analyze_review_sentiments
 from .resapis import post_request
 from .resapis import get_dealer_by_id_from_cf
 from .resapis import get_request
+from .models import CarModel
+from .models import CarMake
+
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -164,26 +167,13 @@ def get_dealer_details(request, id):
     # print(reviewsByid)
 
     # Ricthing "list" of reviews and loading it to context dictionary. (context = {"review_list": {[...]}})
-    # context["review_list"]= reviewsByid
 
     context = {
         "review_list": reviewsByid,
         "id": id
     }
 
-    # print(context)
     return render(request, 'djangoapp/dealer_details.html', context)
-
-    # Iterar sobre cada revisión y procesarla con la función NLU sentiment
-    # for review in reviewsByid:
-    #     textReview = review
-    #     mySentiment = analyze_review_sentiments(textReview)
-
-    #     # Agregar el resultado al lista de resultados
-    #     results.append(f"{textReview} : {mySentiment}")
-        
-            # Devolver la lista de resultados como una cadena
-    # return HttpResponse("\n".join(results))
 
 # ************************************************
 
@@ -203,19 +193,35 @@ def get_dealer_details(request, id):
 # Create a `add_review` view to submit a review
 def add_review(request, id):
 
-    if request.method == 'GET':
-        # print(id)
-        context = {}
-        context = {'id': id}
+# *******************************************************************
+# Showing the form:
+#     if request.method == 'GET':
+#         # print(id)
+#         context = {}
+#         context = {'id': id}
 # #         # Get cars for the dealer
 # #         cars = CarModel.objects.all()
 # #         print(cars)
 # #         context["cars"] = cars
+#         return render(request, 'djangoapp/add_review.html', context)
+# ********************************************************************
+
+    context = {}
+    url = "http://127.0.0.1:3000/dealerships/get"
+    dealer = get_dealer_by_id_from_cf(url, id)
+    context["dealer"] = dealer
+    if request.method == 'GET':
+        # Get cars for the dealer
+        cars = CarModel.objects.all()
+        make = CarMake.objects.all()
+        print(cars)
+        context["cars"] = cars
+        context["id"] = id
+        context["make"] = make
         return render(request, 'djangoapp/add_review.html', context)
 
-
-    #  elif request.method == 'POST':
-    if request.method == 'POST':
+# Sending the form:
+    elif request.method == 'POST':
             # print(id)
             # print(request.POST["id"])
         if request.user.is_authenticated:
@@ -244,7 +250,7 @@ def add_review(request, id):
             new_payload1["review"] = review
             print(review)
             post_request(review_post_url, review, id = id)
-            return redirect ("djangoapp:dealer_details", id = int(request.POST["id"]))
+            return redirect ("djangoapp:dealer_details", id = id)
         else: 
             return redirect ("djangoapp:get_home")
 
