@@ -12,7 +12,7 @@
 
 </head>
     <body>
-        <form action="{% url 'djangoapp:addreview' %}" method="post">
+        <form action="{% url 'djangoapp:addreview' id %}" method="post">
             <div class="container"> <!--Style root div with .container class -->
               {% csrf_token %}
               <h1>Test_addreview</h1>

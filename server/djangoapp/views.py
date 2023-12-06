@@ -153,7 +153,7 @@ def get_name(request, id):
 # Según las pruebas, 'request' corresponde a 'url' y 'id' al parámetro id en urls.py (path(route='dealer/<int:id>').
 def get_dealer_details(request, id):
 
-    context = {}
+    # context = {}
 
     if request.method == "GET":
         # Data retrived from Cloudant through Web API in functions/sanple/python/get_and_post-reviews.py
@@ -164,7 +164,14 @@ def get_dealer_details(request, id):
     # print(reviewsByid)
 
     # Ricthing "list" of reviews and loading it to context dictionary. (context = {"review_list": {[...]}})
-    context["review_list"]= reviewsByid
+    # context["review_list"]= reviewsByid
+
+    context = {
+        "review_list": reviewsByid,
+        "id": id
+    }
+
+    # print(context)
     return render(request, 'djangoapp/dealer_details.html', context)
 
     # Iterar sobre cada revisión y procesarla con la función NLU sentiment
@@ -182,29 +189,29 @@ def get_dealer_details(request, id):
 
 
 # To show form with 'id' as part of URL.
-def review_form(request, id):
-    print(id)
-    context = {}
-    if request.method == "GET":
-        # to pass the 'id' variable to contex as value into form add_review by defoult value= "{{di}}"
-        context = {'id': id}
-        return render(request, 'djangoapp/add_review.html', context)
+# def review_form(request, id):
+#     # print(id)
+#     context = {}
+#     if request.method == "GET":
+#         # to pass the 'id' variable to contex as value into form add_review by defoult value= "{{di}}"
+#         # context = {'id': id}
+#         return render(request, 'djangoapp/add_review.html', context)
         
 
 
 
 # Create a `add_review` view to submit a review
-def add_review(request):
+def add_review(request, id):
 
-    #  if request.method == 'GET':
-    #     print(id)
-        # context = {}
-#         context = {'id': id}
+    if request.method == 'GET':
+        # print(id)
+        context = {}
+        context = {'id': id}
 # #         # Get cars for the dealer
 # #         cars = CarModel.objects.all()
 # #         print(cars)
 # #         context["cars"] = cars
-#         return render(request, 'djangoapp/add_review.html', context)
+        return render(request, 'djangoapp/add_review.html', context)
 
 
     #  elif request.method == 'POST':
@@ -218,7 +225,8 @@ def add_review(request):
             review_post_url = "http://127.0.0.1:5000/api/post_review"
             review = {
                 # int(request.POST["id"]) is the integer hosted into form as value= "{{di}}""
-                "id": int(request.POST["id"]),
+                # "id": int(request.POST["id"]),
+                "id": int(id),
                 "time": request.POST["time"],
                 "name": request.POST["name"],
                 "dealership": request.POST['id'],                

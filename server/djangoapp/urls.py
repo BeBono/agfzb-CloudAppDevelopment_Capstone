@@ -42,10 +42,10 @@ urlpatterns = [
  
 
     # path for add a review view (function)
-    path(route='addreview/', view=views.add_review, name='addreview'),
+    path(route='addreview/<int:id>', view=views.add_review, name='addreview'),
 
     # path for add a review view
-    path(route='post/<int:id>', view=views.review_form, name='reviewform')
-    
+    # path(route='post/<int:id>', view=views.review_form, name='reviewform')
+    # path(route='post/', view=views.review_form, name='reviewform')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

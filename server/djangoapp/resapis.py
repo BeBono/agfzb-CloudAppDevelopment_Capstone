@@ -178,7 +178,7 @@ def get_dealer_reviews_from_cf(url, id):
             # Almacenar todas las revisiones coincidentes en la lista results
     results.extend(Result)
     
-    print(Result)
+    # print(Result)
 
 
         #************************************** 
