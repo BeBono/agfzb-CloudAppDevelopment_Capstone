@@ -161,7 +161,7 @@ def get_dealer_details(request, id):
 
     # Obtener las revisiones del concesionario según id
     reviewsByid = get_dealer_reviews_from_cf(url, id)
-    print(reviewsByid)
+    # print(reviewsByid)
 
     # Ricthing "list" of reviews and loading it to context dictionary. (context = {"review_list": {[...]}})
     context["review_list"]= reviewsByid

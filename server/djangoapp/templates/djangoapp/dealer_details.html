@@ -8,7 +8,7 @@
 
 </head>
 
-<body>
+<body style="padding-left: 20px; padding-right: 20px">
 
     
     <!--Add a nav bar here -->
@@ -59,10 +59,13 @@
     <div>    
     <div class="card-columns">
         {% for dealer in review_list %}
-        <div class="card">
+        <div class="card" style="padding:13px">
             
-            
-            <img class="card-img-left">
+            <img class="card-img-left" src="{% if dealer.sentiment == 'positive' %}{{MEDIA_URL}}/emoji/positive.png{% elif dealer.sentiment == 'neutral' %}{{MEDIA_URL}}/emoji/neutral.png{% else %}{{ MEDIA_URL }}/emoji/negative.png{% endif %}" alt="Descripción de la imagen" style="width: 50px;">
+             <!-- <img class="card-img-left" src="...\server\static\media\emoji\positive.png"> -->
+             <!-- <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" style="width: 50px;"> -->
+
+            <!-- <img class="card-img-left"> -->
 
             <div class="card-body">
                 <h5 class="card-title">{{dealer.car_model}}, {{dealer.car_make}}</h5>
