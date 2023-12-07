@@ -32,10 +32,9 @@
 
             <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
 
-            <div class="container-fluid">
-                
+            <div class="container-fluid">  
                 <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck" style="width: 22px;">
-                <label class="form-check-label" for="purchasecheck">Has purchased the car from {{ dealer.full_name }} ?</label>
+                <label class="form-check-label" for="purchasecheck">Has purchased the car from {{ dealer.full_name }} ? <span style="color: rgb(196, 187, 187);">(select purchased car information below if checked)</span> </label>
             </div>
 
             <label><h4>Select your car (model-make-year): </h4></label>
@@ -44,7 +43,7 @@
                 <select name="car" id="car" class="form-select" required>
                     {% for car in cars %}
                         {% if car.Dealer_id == id|stringformat:"s" %} <!-- Debido a que en models.py la variable Dealer_id de definió como string, entonces debemos convertir el entero "id" a string para poder hacer la comparación-->
-                           <option selected value={{car.Dealer_id}}>{{car.Name}}-{{car.Makes.Name}}-{{ car.year|date:"Y" }}</option> <!-- "car.Makes.Name" accede al modelo CarMake debido a la relación que se creo en models.py con la llave foranea desde Carodel-->
+                           <option selected value={{car.Dealer_id}}>{{car.Makes.Name}}-{{car.Name}}-{{ car.year|date:"Y" }}</option> <!-- "car.Makes.Name" accede al modelo CarMake debido a la relación que se creo en models.py con la llave foranea desde Carodel-->
                         {% endif %}
                     {% endfor %}
                 </select>
