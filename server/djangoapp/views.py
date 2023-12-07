@@ -214,7 +214,7 @@ def add_review(request, id):
         # Get cars for the dealer
         cars = CarModel.objects.all()
         make = CarMake.objects.all()
-        print(cars)
+        # print(cars)
         context["cars"] = cars
         context["id"] = id
         context["make"] = make
@@ -226,23 +226,24 @@ def add_review(request, id):
             # print(request.POST["id"])
         if request.user.is_authenticated:
             # print(csrf_token)
-            # car_id = request.POST["car"]
-            # car = CarModel.objects.get(pk=car_id)
+            car_id = request.POST["car"]
+            car = CarModel.objects.get(pk=car_id)
+            # print(car)
             review_post_url = "http://127.0.0.1:5000/api/post_review"
             review = {
                 # int(request.POST["id"]) is the integer hosted into form as value= "{{di}}""
                 # "id": int(request.POST["id"]),
                 "id": int(id),
-                "time": request.POST["time"],
-                "name": request.POST["name"],
-                "dealership": request.POST['id'],                
-                "review": request.POST["review"],
-                "purchase": True,
-                "another": request.POST["another"],
-                "purchase_date":request.POST["purchase_date"],
-                "car_make": request.POST["car_make"],  
-                "car_model": request.POST["car_model"],
-                "car_year": request.POST["car_year"]  
+                "time": datetime.utcnow().isoformat(),
+                "name": request.user.username,  # Assuming you want to use the authenticated user's name,
+                "dealership": int(id),                
+                "review": request.POST["content"],
+                "purchase": True, # Extract purchase info from POST
+                # "another": request.POST["another"],
+                "purchase_date": request.POST["purchasedate"],  # Extract purchase date from POST,
+                "car_make": car.Makes.Name,  # Extract car make from POST,  
+                "car_model": car.Name,  # Extract car model from POST,
+                "car_year": int(car.year.strftime("%Y")),  # Extract car year from POST  
             }
             
 
