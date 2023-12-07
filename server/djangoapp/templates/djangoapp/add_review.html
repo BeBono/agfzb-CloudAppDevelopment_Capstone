@@ -38,13 +38,15 @@
                 <label class="form-check-label" for="purchasecheck">Has purchased the car from {{ dealer.full_name }} ?</label>
             </div>
 
-            <label><h4>Select your car (model-make-year)</h4></label>
+            <label><h4>Select your car (model-make-year){{id}}</h4></label>
             
-                <select name="car" id="car" class="form-select" required></select>
+                <!-- <select name="car" id="car" class="form-select" required></select> -->
                 <select name="car" id="car" class="form-select" required>
-                {% for car in cars %}
-                    <option selected value={{car.Dealer_id.id}}>{{car.Name}}-{{car.Makes.name}}-{{ car.year|date:"Y" }}</option>
-                {% endfor %}
+                    {% for car in cars %}
+                        {% if car.Dealer_id == id|stringformat:"s" %} <!-- Debido a que en models.py la variable Dealer_id de definió como string, entonces debemos convertir el entero "id" a string para poder hacer la comparación-->
+                           <option selected value={{car.Dealer_id}}>{{car.Name}}-{{car.Makes.name}}-{{ car.year|date:"Y" }}</option>
+                        {% endif %}
+                    {% endfor %}
                 </select>
 
                 <br>
