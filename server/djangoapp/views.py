@@ -178,33 +178,8 @@ def get_dealer_details(request, id):
 # ************************************************
 
 
-# To show form with 'id' as part of URL.
-# def review_form(request, id):
-#     # print(id)
-#     context = {}
-#     if request.method == "GET":
-#         # to pass the 'id' variable to contex as value into form add_review by defoult value= "{{di}}"
-#         # context = {'id': id}
-#         return render(request, 'djangoapp/add_review.html', context)
-        
-
-
-
 # Create a `add_review` view to submit a review
 def add_review(request, id):
-
-# *******************************************************************
-# Showing the form:
-#     if request.method == 'GET':
-#         # print(id)
-#         context = {}
-#         context = {'id': id}
-# #         # Get cars for the dealer
-# #         cars = CarModel.objects.all()
-# #         print(cars)
-# #         context["cars"] = cars
-#         return render(request, 'djangoapp/add_review.html', context)
-# ********************************************************************
 
     context = {}
     url = "http://127.0.0.1:3000/dealerships/get"
@@ -229,7 +204,7 @@ def add_review(request, id):
         # línea de código.
         Sentient_result = analyze_review_sentiments(request.POST["content"])
         print(Sentient_result)
-        
+
         if request.user.is_authenticated:
             # print(csrf_token)
             car_id = request.POST["car"]
@@ -263,43 +238,3 @@ def add_review(request, id):
             return redirect ("djangoapp:get_home")
       
 
-
-
-
-# Create a `add_review` view to submit a review (final presentation as per forums, to delete):
-
-# def add_review(request, id):
-#     context = {}
-#     url = "3000-URL/dealerships/get"
-#     dealer = get_dealer_by_id_from_cf(url, id)
-#     context["dealer"] = dealer    
-#     if request.method == 'GET':
-#         # Get cars for the dealer
-#         cars = CarModel.objects.all()
-#         print(cars)
-#         context["cars"] = cars
-#         return render(request, 'djangoapp/add_review.html', context)
-    
-#     elif request.method == 'POST':
-#         if request.user.is_authenticated:
-#             car_id = request.POST["car"]
-#             car = CarModel.objects.get(pk=car_id)
-#             review_post_url = "5000-url/api/post_review"
-#             review = {
-#                 "id":id,
-#                 "time":datetime.utcnow().isoformat(),
-#                 "name":request.user.username,  # Assuming you want to use the authenticated user's name
-#                 "dealership" :id,                
-#                 "review": request.POST["content"],  # Extract the review from the POST request
-#                 "purchase": True,  # Extract purchase info from POST
-#                 "purchase_date":request.POST["purchasedate"],  # Extract purchase date from POST
-#                 "car_make": car.car_make.name,  # Extract car make from POST
-#                 "car_model": car.name,  # Extract car model from POST
-#                 "car_year": int(car.year.strftime("%Y")),  # Extract car year from POST
-#             }
-#             review=json.dumps(review,default=str)
-#             new_payload1 = {}
-#             new_payload1["review"] = review
-#             print("\nREVIEW:",review)
-#             post_request(review_post_url, review, id = id)
-#         return redirect("djangoapp:dealer_details", id = id)

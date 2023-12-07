@@ -26,9 +26,6 @@ urlpatterns = [
     # path for logout
     path('logout/', views.logout_request, name='logout'),
 
-
-    # path for home test (to be deleted)
-    # path(route='home/', view=views.get_home, name='get_home'),
     
     # path for all dealer names view tests
     path(route='home/', view=views.get_dealerships, name='index'),
@@ -44,8 +41,5 @@ urlpatterns = [
     # path for add a review view (function)
     path(route='addreview/<int:id>', view=views.add_review, name='addreview'),
 
-    # path for add a review view
-    # path(route='post/<int:id>', view=views.review_form, name='reviewform')
-    # path(route='post/', view=views.review_form, name='reviewform')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
