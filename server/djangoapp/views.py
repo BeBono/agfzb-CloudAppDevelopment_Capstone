@@ -222,12 +222,18 @@ def add_review(request, id):
 
 # Sending the form:
     elif request.method == 'POST':
-            # print(id)
-            # print(request.POST["id"])
+
+        # Tiempo de análisisde IBM NLU sentiment: (Obtener resultado antes de guardar en la base de datos)
+        # analyze_review_sentiments("texto a analizar") es una llamada síncrona lo que significa que el 
+        # programa esperará a que esta función se complete antes de continuar con la siguiente 
+        # línea de código.
+        Sentient_result = analyze_review_sentiments(request.POST["content"])
+        print(Sentient_result)
+        
         if request.user.is_authenticated:
             # print(csrf_token)
             car_id = request.POST["car"]
-            car = CarModel.objects.get(pk=car_id)
+            car = CarModel.objects.get(pk=car_id)   
             # print(car)
             review_post_url = "http://127.0.0.1:5000/api/post_review"
             review = {
@@ -244,6 +250,7 @@ def add_review(request, id):
                 "car_make": car.Makes.Name,  # Extract car make from POST,  
                 "car_model": car.Name,  # Extract car model from POST,
                 "car_year": int(car.year.strftime("%Y")),  # Extract car year from POST  
+                "sentiment": Sentient_result
             }
             
 
@@ -254,7 +261,7 @@ def add_review(request, id):
             return redirect ("djangoapp:dealer_details", id = id)
         else: 
             return redirect ("djangoapp:get_home")
-
+      
 
 
 

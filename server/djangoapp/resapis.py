@@ -247,6 +247,11 @@ def analyze_review_sentiments(dealerreview):
 # from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 # from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions
 
+# Tiempo de análisis:
+# analyze_review_sentiments("texto a analizar") es una llamada síncrona a la  lo que significa que el programa esperará a que esta función se complete antes de continuar con la siguiente 
+# línea de código.
+
+
 
 
 # **************************** POST
