@@ -102,37 +102,6 @@ def post_review():
     return jsonify({"message": "Review posted successfully"}), 201
 
 
-# ***********************
-
-# @app.route('/api/post_review', methods=['POST'])
-# def post_review():
-#     if not request.json:
-#         abort(400, description='Invalid JSON data')
-    
-#     # Extract review data from the request JSON
-#     review_data = request.json
-
-#     # Validate that the required fields are present in the review data
-#     required_fields = ['id', 'name', 'dealership', 'review', 'purchase', 'purchase_date', 'car_make', 'car_model', 'car_year']
-#     for field in required_fields:
-#         if field not in review_data:
-#             abort(400, description=f'Missing required field: {field}')
-
-#     # Save the review data as a new document in the Cloudant database
-#     print("review--------->", review_data)
-#     # Ensure review_data is a dictionary
-#     if not isinstance(review_data, dict):
-#         review_data = json.loads(review_data)  # Parse string as JSON
-#         if not isinstance(review_data, dict):
-#             abort(400, description='Invalid JSON data')
-
-#     db.create_document(review_data)
-
-#     return jsonify({"message": "Review posted successfully"}), 201
-
-
-# ***********************
-
 
     # ***************PUT
 
