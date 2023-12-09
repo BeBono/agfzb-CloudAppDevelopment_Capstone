@@ -171,7 +171,9 @@ def get_dealer_reviews_from_cf(url, id):
         # arreglo que contendrá el resultado final
     results = []
         # Call get_request with a URL parameter
-    json_result = get_request(url, id=id)
+    # json_result = get_request(url, id=id)
+    json_result = get_request(url)
+    # print(json_result)
 
     # Result = [review["review"] for review in json_result["reviews"] if review["id"] == id]
     Result = [review for review in json_result["reviews"] if review["id"] == id]
