@@ -51,12 +51,12 @@ def login_request(request):
         if user is not None:
             # If user is valid, call login method to login current user
             login(request, user)
-            return render(request, 'djangoapp/index.html', context)
+            return redirect('djangoapp:index')
         else:
             # If not, return to login page again
-            return render(request, 'djangoapp/contact.html', context)
+            return redirect('djangoapp:index')
     else:
-        return render(request, 'djangoapp/index.html', context)
+        return redirect('djangoapp:index')
 
 
 # Create a `logout_request` view to handle sign out request
@@ -66,8 +66,7 @@ def logout_request(request):
     # Logout user in the request
     logout(request)
     # Redirect user back to course list view
-    # return redirect('djangoapp/index.html')
-    return render(request, 'djangoapp/index.html')
+    return redirect('djangoapp:index')
 
 # Create a `registration_request` view to handle sign up request
 def registration_request(request):
@@ -98,9 +97,11 @@ def registration_request(request):
             # Login the user and redirect to course list page
             login(request, user)
             #return redirect("djangoapp/index.html")
-            return render(request, 'djangoapp/index.html')
+            # return render('djangoapp:index')
+            return redirect('djangoapp:index')
         else:
-            return render(request, 'djangoapp/registration.html', context)
+            return redirect('djangoapp:index')
+            # return render(request, 'djangoapp/registration.html', context)
 
 
 
@@ -141,12 +142,12 @@ def get_dealerships(request):
     return render(request, 'djangoapp/index.html', context)
     
 
-# Get dealer name by id view
+# Get dealer name by id view (test)
 
 def get_name(request, id):
     if request.method == "GET":
         url = "http://127.0.0.1:3000/dealerships/get"
-        # Get dealers from the URL
+        # Get dealer from the URL by id
         dealership = get_dealer_by_id_from_cf(url, id)
         return HttpResponse(dealership)
 
