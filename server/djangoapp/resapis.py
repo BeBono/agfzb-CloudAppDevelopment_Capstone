@@ -43,7 +43,7 @@ from ibm_watson.natural_language_understanding_v1 import Features, SentimentOpti
 
 
 # *****************************
-# Lab Original by AI (1/2)
+# Lab Original by A (1/2)
 
 def get_request(url, **kwargs):
     print(kwargs)
@@ -258,7 +258,12 @@ def analyze_review_sentiments(dealerreview):
 
 # **************************** POST
 def post_request(url, json_payload, **kwargs):
-    url= "http://127.0.0.1:5000/api/post_review"
+
+    # Before - local
+    # url= "http://127.0.0.1:5000/api/post_review"
+
+    # After API from tehia Lab
+    url = "https://albertocarb1-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
     response = requests.post(url, params=kwargs, json=json_payload)
     # response = requests.post(url, json=json_payload)
     return response
