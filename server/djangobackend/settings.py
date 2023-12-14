@@ -27,7 +27,13 @@ DEBUG = True
 
 APPEND_SLASH = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+# ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+
+
+# z
+# >>>>>>>>This is really important to avoid the error about CSRF token: ********<<<<
+ALLOWED_HOSTS = ["localhost",'localhost:8000', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://albertocarb1-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai']
 
 
 # Application definition
