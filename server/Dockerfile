@@ -21,6 +21,8 @@ COPY . $APP
 
 EXPOSE 8000
 
+RUN pip install gunicorn
+
 RUN chmod +x /app/entrypoint.sh
 
 ENTRYPOINT ["/bin/bash","/app/entrypoint.sh"]
