@@ -122,7 +122,11 @@ def get_dealerships(request):
     if request.method == "GET":
         # Dictionary empty called 'context'
         context= {}
-        url = "http://127.0.0.1:3000/dealerships/get"
+        # Before - local
+        # url = "http://127.0.0.1:3000/dealerships/get"
+
+        #After API fron Theia Lab.
+        url = "https://albertocarb1-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
        
         # To charge data to one instance of CarDealer Class only (no used here).
         SaveToCarDealer = get_dealers_from_cf(url)
@@ -146,7 +150,13 @@ def get_dealerships(request):
 
 def get_name(request, id):
     if request.method == "GET":
-        url = "http://127.0.0.1:3000/dealerships/get"
+
+        #Before - local
+        # url = "http://127.0.0.1:3000/dealerships/get"
+
+        #After API from Theia Lab.
+        url = "https://albertocarb1-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+
         # Get dealer from the URL by id
         dealership = get_dealer_by_id_from_cf(url, id)
         return HttpResponse(dealership)
@@ -161,7 +171,13 @@ def get_dealer_details(request, id):
 
     if request.method == "GET":
         # Data retrived from Cloudant through Web API in functions/sanple/python/get_and_post-reviews.py
-        url = "http://127.0.0.1:5000/api/get_reviews"
+        
+        # Before  - local.
+        # url = "http://127.0.0.1:5000/api/get_reviews"
+
+        # After API from Tehia Lab:
+        url = "https://albertocarb1-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
+
 
     # Obtener las revisiones del concesionario según id
     reviewsByid = get_dealer_reviews_from_cf(url, id)
@@ -183,7 +199,13 @@ def get_dealer_details(request, id):
 def add_review(request, id):
 
     context = {}
-    url = "http://127.0.0.1:3000/dealerships/get"
+    
+    # Before  - local
+    # url = "http://127.0.0.1:3000/dealerships/get"
+    
+    # After API from Theia Lab
+    url = "https://albertocarb1-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+
     dealer = get_dealer_by_id_from_cf(url, id)
     context["dealer"] = dealer
     if request.method == 'GET':
@@ -211,7 +233,13 @@ def add_review(request, id):
             car_id = request.POST["car"]
             car = CarModel.objects.get(pk=car_id)   
             # print(car)
-            review_post_url = "http://127.0.0.1:5000/api/post_review"
+
+            # Before local
+            # review_post_url = "http://127.0.0.1:5000/api/post_review"
+
+            #After:
+            review_post_url = "https://albertocarb1-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"    
+
             review = {
                 # int(request.POST["id"]) is the integer hosted into form as value= "{{di}}""
                 # "id": int(request.POST["id"]),
