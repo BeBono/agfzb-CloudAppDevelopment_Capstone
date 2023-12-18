@@ -73,3 +73,7 @@ app.listen(port, () => {
 // To run in localhost
 
 // http://127.0.0.1:3000/dealerships/get
+
+// http://127.0.0.1:3000/dealerships/get?id=1
+
+// http://127.0.0.1:3000/dealerships/get?state=minesotta
